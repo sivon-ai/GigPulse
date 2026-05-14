@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: #0b1120;
+    font-family: "Inter", system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: rgba(6, 182, 212, 0.35);
+    color: #fff;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24;
+  }
+
+  .glass-card {
+    @apply rounded-2xl border border-white/10 bg-white/[0.055] shadow-2xl shadow-blue-950/20 backdrop-blur-2xl transition;
+  }
+
+  .glass-panel {
+    @apply rounded-2xl border border-white/10 bg-slate-950/55 shadow-2xl shadow-blue-950/30 backdrop-blur-2xl;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 via-violet-500 to-cyan-400 px-5 py-2.5 text-sm font-bold text-white shadow-glow transition duration-300 hover:-translate-y-0.5 hover:shadow-cyan;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-100 transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/40 hover:bg-white/10;
+  }
+
+  .icon-button {
+    @apply relative grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:border-cyan-300/40 hover:bg-white/10 hover:text-white;
+  }
+
+  .nav-link {
+    @apply relative text-sm font-medium text-slate-300 transition hover:text-white;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    transition: transform 220ms ease;
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .category-pill {
+    @apply rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-300/40 hover:bg-cyan-300/10 hover:text-white;
+  }
+
+  .ticker-chip {
+    @apply rounded-full border border-white/10 bg-slate-950/70 px-5 py-2 text-sm font-semibold text-cyan-100 shadow-cyan;
+  }
+
+  .skill-badge {
+    @apply rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-xs font-semibold text-slate-200;
+  }
+
+  .message-bubble {
+    @apply w-fit max-w-[75%] rounded-2xl px-4 py-3 text-sm leading-6 text-slate-100;
+  }
+
+  .message-bubble.left {
+    @apply rounded-bl-md bg-white/10;
+  }
+
+  .message-bubble.right {
+    @apply ml-auto rounded-br-md bg-gradient-to-r from-blue-500 to-cyan-400 font-medium text-white;
+  }
+
+  .typing-dot {
+    @apply h-2 w-2 rounded-full bg-cyan-300 animate-pulse-soft;
+  }
+
+  .skeleton-line {
+    @apply h-3 rounded-full bg-white/10 animate-skeleton;
+  }
+}
+
+@layer utilities {
+  .animated-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(180deg, transparent, black 16%, black 78%, transparent);
+  }
+
+  .ticker-mask {
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+
+  .data-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(6, 182, 212, 0.7), transparent);
+    animation: dataFlow 3.2s ease-in-out infinite;
+  }
+
+  .animation-delay-150 {
+    animation-delay: 150ms;
+  }
+
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .animation-delay-700 {
+    animation-delay: 700ms;
+  }
+
+  .animation-delay-1000 {
+    animation-delay: 1000ms;
+  }
+
+  .light {
+    background:
+      radial-gradient(circle at top right, rgba(59, 130, 246, 0.2), transparent 28%),
+      linear-gradient(180deg, #eef6ff 0%, #f8fafc 100%);
+  }
+
+  .light .glass-card,
+  .light .glass-panel {
+    border-color: rgba(15, 23, 42, 0.12);
+    background: rgba(255, 255, 255, 0.78);
+    color: #0f172a;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.1);
+  }
+
+  .light h1,
+  .light h2,
+  .light h3,
+  .light h4,
+  .light .text-white {
+    color: #0f172a;
+  }
+
+  .light .text-slate-300,
+  .light .text-slate-400 {
+    color: #475569;
+  }
+
+  .light .bg-slate-950,
+  .light .bg-slate-950\/40,
+  .light .bg-slate-950\/50,
+  .light .bg-slate-950\/55,
+  .light .bg-slate-950\/60,
+  .light .bg-slate-950\/70 {
+    background-color: rgba(255, 255, 255, 0.72);
+  }
+}
