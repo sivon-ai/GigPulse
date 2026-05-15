@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve GigPulse (Django WSGI)
+After=network.target
+
+[Service]
+User={{DEPLOY_USER}}
+Group=www-data
+WorkingDirectory={{APP_PATH}}
+Environment="PATH={{VENV_PATH}}/Scripts"
+ExecStart={{VENV_PATH}}/Scripts/gunicorn --workers 3 --bind unix:{{APP_PATH}}/run/gunicorn.sock config.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

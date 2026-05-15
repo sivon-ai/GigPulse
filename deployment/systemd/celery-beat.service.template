@@ -1,0 +1,13 @@
+[Unit]
+Description=Celery Beat Scheduler for GigPulse
+After=network.target
+
+[Service]
+User={{DEPLOY_USER}}
+Group=www-data
+WorkingDirectory={{APP_PATH}}
+Environment="PATH={{VENV_PATH}}/Scripts"
+ExecStart={{VENV_PATH}}/Scripts/celery -A config beat --loglevel=info
+
+[Install]
+WantedBy=multi-user.target
