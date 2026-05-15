@@ -24,7 +24,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", default="dev-insecure-change-me")
 
 ALLOWED_HOSTS = env.list(
     "DJANGO_ALLOWED_HOSTS",
-    default=["localhost", "127.0.0.1"],
+    default=["localhost", "127.0.0.1", "gigpulse.duckdns.org"],
 )
 
 # Application definition
@@ -143,11 +143,11 @@ AUTH_USER_MODEL = "users.User"
 # CORS / CSRF
 
 CORS_ALLOWED_ORIGINS = env.list(
-    "https://gigpulse.duckdns.org",
-    default=["http://localhost:5173", "http://127.0.0.1:5173"],
+    "CORS_ALLOWED_ORIGINS",
+    default=["http://localhost:5173", "http://127.0.0.1:5173", "https://gigpulse.duckdns.org"],
 )
 CORS_ALLOW_CREDENTIALS = True
-CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=["https://gigpulse.duckdns.org"])
 
 # DRF
 
