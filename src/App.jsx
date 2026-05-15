@@ -50,6 +50,8 @@ import {
   useTransform
 } from "framer-motion";
 import heroVisual from "./assets/gigpulse-hero.png";
+import { AuthProvider, useAuth } from "./hooks/useAuth";
+import AuthModal from "./components/AuthModal";
 
 const navItems = [
   ["Home", "#home"],
@@ -364,7 +366,7 @@ function RadialMeter({ value, label }) {
   );
 }
 
-function Navbar({ isLight, onToggleTheme }) {
+function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
   const [open, setOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
@@ -412,12 +414,8 @@ function Navbar({ isLight, onToggleTheme }) {
           >
             {isLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </button>
-          <a href="#pricing" className="btn-ghost">
-            Login
-          </a>
-          <a href="#dashboard" className="btn-primary">
-            Sign Up
-          </a>
+          <button onClick={onLoginClick} className="btn-ghost">Login</button>
+          <button onClick={onSignUpClick} className="btn-primary">Sign Up</button>
         </div>
 
         <button
@@ -469,9 +467,9 @@ function Navbar({ isLight, onToggleTheme }) {
             <button className="btn-ghost" type="button" onClick={onToggleTheme}>
               {isLight ? "Dark" : "Light"}
             </button>
-            <a href="#dashboard" className="btn-primary text-center">
+            <button className="btn-primary text-center" onClick={onSignUpClick}>
               Sign Up
-            </a>
+            </button>
           </div>
         </motion.div>
       )}
@@ -514,10 +512,10 @@ function Hero() {
             skills, and grow careers with real-time market intelligence.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <a href="#dashboard" className="btn-primary h-12 justify-center px-6 text-base">
+            <button onClick={() => window.dispatchEvent(new CustomEvent('openAuth', { detail: { type: 'register' } }))} className="btn-primary h-12 justify-center px-6 text-base">
               Get Started
               <ArrowUpRight className="h-4 w-4" />
-            </a>
+            </button>
             <a href="#trends" className="btn-ghost h-12 justify-center px-6 text-base">
               Explore Trends
               <BarChart3 className="h-4 w-4" />
@@ -1164,9 +1162,7 @@ function Dashboard() {
                 placeholder="Search messages, jobs, insights"
               />
             </div>
-            <button className="btn-primary h-10" type="button">
-              New proposal
-            </button>
+            <NewProposalButton />
           </div>
         </div>
 
@@ -1370,11 +1366,37 @@ function Footer() {
   );
 }
 
+function NewProposalButton() {
+  const { user } = useAuth();
+  function handleClick() {
+    if (!user) {
+      window.dispatchEvent(new CustomEvent("openAuth", { detail: { type: "login" } }));
+      return;
+    }
+    // placeholder: open proposal creation flow
+    alert("Open New Proposal flow (not implemented)");
+  }
+
+  return (
+    <button className="btn-primary h-10" type="button" onClick={handleClick}>
+      New proposal
+    </button>
+  );
+}
+
 export default function App() {
   const [isLight, setIsLight] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authType, setAuthType] = useState("login");
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
+    function handleOpenAuth(e) {
+      const type = e?.detail?.type || "login";
+      openAuth(type);
+    }
+    window.addEventListener("openAuth", handleOpenAuth);
+    return () => window.removeEventListener("openAuth", handleOpenAuth);
   }, []);
 
   const appClass = useMemo(
@@ -1385,21 +1407,34 @@ export default function App() {
     [isLight]
   );
 
+  function openAuth(type = "login") {
+    setAuthType(type);
+    setAuthOpen(true);
+  }
+
   return (
-    <div className={appClass}>
-      <Navbar isLight={isLight} onToggleTheme={() => setIsLight((current) => !current)} />
-      <main>
-        <Hero />
-        <TrendingSkills />
-        <Projects />
-        <FreelancerProfiles />
-        <AIRecommendation />
-        <ChatPreview />
-        <Dashboard />
-        <Pricing />
-        <Testimonials />
-      </main>
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div className={appClass}>
+        <Navbar
+          isLight={isLight}
+          onToggleTheme={() => setIsLight((current) => !current)}
+          onLoginClick={() => openAuth("login")}
+          onSignUpClick={() => openAuth("register")}
+        />
+        <main>
+          <Hero />
+          <TrendingSkills />
+          <Projects />
+          <FreelancerProfiles />
+          <AIRecommendation />
+          <ChatPreview />
+          <Dashboard />
+          <Pricing />
+          <Testimonials />
+        </main>
+        <Footer />
+        <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} type={authType} />
+      </div>
+    </AuthProvider>
   );
 }
