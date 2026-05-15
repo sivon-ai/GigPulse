@@ -62,179 +62,13 @@ const navItems = [
   ["Pricing", "#pricing"]
 ];
 
-const stats = [
-  { label: "Live projects indexed", value: 48200, suffix: "+", icon: FileText },
-  { label: "Avg rate lift", value: 34, suffix: "%", icon: TrendingUp },
-  { label: "Skills tracked", value: 1260, suffix: "+", icon: BarChart3 }
-];
-
-const tickerItems = [
-  "React +22%",
-  "AI Agents +41%",
-  "AWS Lambda +18%",
-  "Django APIs +15%",
-  "Flutter +27%",
-  "UI Systems +31%",
-  "Data Labeling +12%",
-  "DevOps +24%"
-];
-
-const skills = [
-  {
-    name: "React",
-    demand: 92,
-    growth: "+22%",
-    rate: "$78/hr",
-    projects: "12.8k",
-    color: "#3B82F6",
-    points: [18, 26, 22, 36, 42, 58, 64, 78, 88, 92]
-  },
-  {
-    name: "AI/ML",
-    demand: 96,
-    growth: "+41%",
-    rate: "$112/hr",
-    projects: "9.4k",
-    color: "#8B5CF6",
-    points: [12, 18, 24, 32, 48, 62, 74, 82, 91, 96]
-  },
-  {
-    name: "AWS",
-    demand: 87,
-    growth: "+18%",
-    rate: "$96/hr",
-    projects: "8.1k",
-    color: "#06B6D4",
-    points: [32, 38, 42, 47, 53, 62, 68, 72, 82, 87]
-  },
-  {
-    name: "Django",
-    demand: 78,
-    growth: "+15%",
-    rate: "$72/hr",
-    projects: "5.6k",
-    color: "#22C55E",
-    points: [28, 31, 35, 44, 49, 51, 61, 68, 74, 78]
-  },
-  {
-    name: "Flutter",
-    demand: 83,
-    growth: "+27%",
-    rate: "$68/hr",
-    projects: "6.3k",
-    color: "#38BDF8",
-    points: [22, 30, 33, 39, 45, 56, 61, 70, 78, 83]
-  },
-  {
-    name: "UI/UX",
-    demand: 89,
-    growth: "+31%",
-    rate: "$82/hr",
-    projects: "10.7k",
-    color: "#F472B6",
-    points: [26, 34, 38, 45, 50, 59, 67, 76, 84, 89]
-  }
-];
-
-const projects = [
-  {
-    title: "AI-powered CRM insights dashboard",
-    budget: "$8k - $14k",
-    rating: "4.9",
-    skills: ["React", "LLM", "Charts"],
-    duration: "6 weeks",
-    proposals: 18,
-    match: 94
-  },
-  {
-    title: "Django marketplace API rebuild",
-    budget: "$5k - $9k",
-    rating: "4.8",
-    skills: ["Django", "AWS", "Postgres"],
-    duration: "4 weeks",
-    proposals: 11,
-    match: 88
-  },
-  {
-    title: "Flutter booking app launch",
-    budget: "$7k - $12k",
-    rating: "5.0",
-    skills: ["Flutter", "Firebase", "UX"],
-    duration: "8 weeks",
-    proposals: 23,
-    match: 81
-  },
-  {
-    title: "Stripe billing portal redesign",
-    budget: "$4k - $7k",
-    rating: "4.7",
-    skills: ["UI/UX", "Next.js", "Stripe"],
-    duration: "3 weeks",
-    proposals: 14,
-    match: 86
-  }
-];
-
-const freelancers = [
-  {
-    name: "Maya Chen",
-    role: "AI product designer",
-    rating: "5.0",
-    projects: 84,
-    earnings: "$186k",
-    availability: "Open this week",
-    skills: ["UX", "AI flows", "Figma"],
-    gradient: "from-cyan-400 to-blue-500"
-  },
-  {
-    name: "Arjun Mehta",
-    role: "Django + AWS engineer",
-    rating: "4.9",
-    projects: 117,
-    earnings: "$241k",
-    availability: "2 slots left",
-    skills: ["Django", "AWS", "APIs"],
-    gradient: "from-violet-400 to-fuchsia-500"
-  },
-  {
-    name: "Sofia Rivera",
-    role: "React analytics specialist",
-    rating: "4.98",
-    projects: 96,
-    earnings: "$212k",
-    availability: "Available now",
-    skills: ["React", "D3", "SaaS"],
-    gradient: "from-blue-400 to-indigo-500"
-  }
-];
-
-const testimonials = [
-  {
-    quote:
-      "GigPulse showed me that AI workflow design was exploding before my profile caught up. Two months later I doubled my average project size.",
-    name: "Leah Torres",
-    role: "Freelance product strategist"
-  },
-  {
-    quote:
-      "The project recommendations feel like a senior talent agent. We found vetted cloud engineers faster than any marketplace we had used.",
-    name: "Daniel Wu",
-    role: "Founder, MeterStack"
-  },
-  {
-    quote:
-      "The demand signals helped me stop guessing. I rebuilt my portfolio around React dashboards and started winning higher-value work.",
-    name: "Priya Shah",
-    role: "Frontend consultant"
-  }
-];
-
-const dashboardMetrics = [
-  { label: "Earnings", value: "$18.4k", delta: "+18%", icon: Wallet },
-  { label: "Success rate", value: "96%", delta: "+4%", icon: ShieldCheck },
-  { label: "Profile views", value: "7.2k", delta: "+31%", icon: Eye },
-  { label: "Proposals", value: "42", delta: "+12%", icon: Send }
-];
+const stats = [];
+const tickerItems = [];
+const skills = [];
+const projects = [];
+const freelancers = [];
+const testimonials = [];
+const dashboardMetrics = [];
 
 const sidebarItems = [
   { label: "Overview", icon: LayoutDashboard },
@@ -554,15 +388,17 @@ function Hero() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Demand pulse
+                  Live data
                 </p>
-                <p className="mt-1 text-2xl font-bold text-white">AI/ML</p>
+                <p className="mt-1 text-2xl font-bold text-white">Connect account</p>
               </div>
               <span className="rounded-full bg-violet-400/15 px-3 py-1 text-sm font-semibold text-violet-200">
-                +41%
+                Empty
               </span>
             </div>
-            <LineSpark points={skills[1].points} color="#8B5CF6" className="mt-4 h-28 w-full" />
+            <div className="mt-4 rounded-2xl border border-dashed border-white/15 bg-white/5 p-6 text-center text-sm text-slate-400">
+              Sample market charts are removed until you connect real project data.
+            </div>
           </motion.div>
 
           <motion.div
@@ -574,29 +410,16 @@ function Hero() {
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
-                  Match score
+                  Workspaces
                 </p>
-                <p className="mt-1 text-xl font-bold text-white">Django + AWS</p>
+                <p className="mt-1 text-xl font-bold text-white">Client and freelancer</p>
               </div>
-              <span className="text-3xl font-bold text-cyan-200">82%</span>
+              <span className="text-3xl font-bold text-cyan-200">2 roles</span>
             </div>
             <div className="space-y-3">
-              {["High-paying APIs", "Cloud migrations", "SaaS backends"].map((item, index) => (
-                <div key={item}>
-                  <div className="mb-1 flex justify-between text-xs text-slate-400">
-                    <span>{item}</span>
-                    <span>{78 + index * 6}%</span>
-                  </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                    <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-cyan-300 to-blue-500"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${78 + index * 6}%` }}
-                      transition={{ duration: 0.9, delay: 0.5 + index * 0.1 }}
-                    />
-                  </div>
-                </div>
-              ))}
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300">
+                Role-specific dashboards load after sign-in.
+              </div>
             </div>
           </motion.div>
 
@@ -611,8 +434,8 @@ function Hero() {
                 <Sparkles className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm text-slate-400">Next best skill</p>
-                <p className="font-semibold text-white">AI Agents</p>
+                <p className="text-sm text-slate-400">Next step</p>
+                <p className="font-semibold text-white">Connect your account</p>
               </div>
             </div>
           </motion.div>
@@ -621,7 +444,7 @@ function Hero() {
 
       <div className="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
         <div className="grid gap-4 md:grid-cols-3">
-          {stats.map(({ label, value, suffix, icon: Icon }) => (
+            {stats.length > 0 ? stats.map(({ label, value, suffix, icon: Icon }) => (
             <motion.div
               key={label}
               className="glass-panel flex items-center gap-4 p-4"
@@ -637,19 +460,17 @@ function Hero() {
                 <p className="text-sm text-slate-400">{label}</p>
               </div>
             </motion.div>
-          ))}
+          )) : (
+            <div className="glass-panel md:col-span-3 p-6 text-center text-slate-300">
+              Live statistics appear here after the backend is connected.
+            </div>
+          )}
         </div>
       </div>
 
       <div className="border-y border-white/10 bg-white/[0.03] py-3 backdrop-blur-xl">
-        <div className="ticker-mask overflow-hidden">
-          <div className="flex min-w-max animate-ticker gap-3">
-            {[...tickerItems, ...tickerItems].map((item, index) => (
-              <span key={`${item}-${index}`} className="ticker-chip">
-                {item}
-              </span>
-            ))}
-          </div>
+        <div className="mx-auto max-w-7xl px-4 text-center text-sm text-slate-400 sm:px-6 lg:px-8">
+          Live trend ticker removed until real market data is connected.
         </div>
       </div>
     </section>
@@ -686,81 +507,8 @@ function TrendingSkills() {
         </div>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-3">
-        {skills.map((skill, index) => (
-          <motion.article
-            key={skill.name}
-            className="glass-card overflow-hidden p-5"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.06 }}
-            whileHover={{ y: -6 }}
-          >
-            <div className="flex items-start justify-between">
-              <div>
-                <h3 className="text-xl font-bold text-white">{skill.name}</h3>
-                <p className="mt-1 text-sm text-slate-400">{skill.projects} open projects</p>
-              </div>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-cyan-100">
-                {skill.growth}
-              </span>
-            </div>
-            <LineSpark points={skill.points} color={skill.color} className="mt-5 h-24 w-full" />
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-slate-950/40 p-3">
-                <p className="text-xs text-slate-500">Avg freelance rate</p>
-                <p className="mt-1 text-lg font-bold text-white">{skill.rate}</p>
-              </div>
-              <div className="rounded-2xl bg-slate-950/40 p-3">
-                <p className="text-xs text-slate-500">Demand score</p>
-                <p className="mt-1 text-lg font-bold text-white">{skill.demand}/100</p>
-              </div>
-            </div>
-            <div className="mt-5">
-              <div className="mb-2 flex justify-between text-xs text-slate-400">
-                <span>Hiring momentum</span>
-                <span>{skill.demand}%</span>
-              </div>
-              <div className="h-2 overflow-hidden rounded-full bg-white/10">
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{
-                    background: `linear-gradient(90deg, ${skill.color}, #06B6D4)`
-                  }}
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.demand}%` }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8 }}
-                />
-              </div>
-            </div>
-          </motion.article>
-        ))}
-      </div>
-
-      <div className="mt-6 grid gap-5 lg:grid-cols-[1.4fr_0.9fr]">
-        <div className="glass-card p-5">
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <h3 className="text-xl font-bold text-white">Hiring trend graph</h3>
-              <p className="text-sm text-slate-400">Weekly demand across premium project posts</p>
-            </div>
-            <span className="rounded-full bg-cyan-300/10 px-3 py-1 text-sm text-cyan-100">
-              Live
-            </span>
-          </div>
-          <BarStack values={[46, 70, 52, 84, 68, 92, 78, 88, 64, 96, 74, 86]} />
-        </div>
-
-        <div className="glass-card p-5">
-          <h3 className="text-xl font-bold text-white">Portfolio alignment</h3>
-          <p className="mt-1 text-sm text-slate-400">Circular fit chart based on your skill graph</p>
-          <div className="mt-6 space-y-6">
-            <RadialMeter value={82} label="Django + AWS" />
-            <RadialMeter value={74} label="React + Analytics" />
-          </div>
-        </div>
+      <div className="glass-card p-8 text-center text-slate-300">
+        Skill trend cards were removed until real marketplace data is connected.
       </div>
     </section>
   );
@@ -774,56 +522,8 @@ function Projects() {
         title="High-signal freelance work, ranked by fit and demand."
         copy="Every project card blends client quality, required skills, competition, budget, and timing so freelancers can act faster."
       />
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {projects.map((project, index) => (
-          <motion.article
-            key={project.title}
-            className="glass-card flex min-h-[320px] flex-col p-5"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.05 }}
-            whileHover={{ y: -7 }}
-          >
-            <div className="mb-5 flex items-center justify-between">
-              <span className="rounded-full bg-blue-400/10 px-3 py-1 text-sm font-semibold text-blue-100">
-                {project.match}% match
-              </span>
-              <div className="flex items-center gap-1 text-sm text-amber-200">
-                <Star className="h-4 w-4 fill-current" />
-                {project.rating}
-              </div>
-            </div>
-            <h3 className="text-xl font-bold leading-snug text-white">{project.title}</h3>
-            <p className="mt-3 text-2xl font-bold text-cyan-100">{project.budget}</p>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {project.skills.map((skill) => (
-                <span key={skill} className="skill-badge">
-                  {skill}
-                </span>
-              ))}
-            </div>
-            <div className="mt-auto grid gap-3 pt-6 text-sm text-slate-300">
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-slate-500" />
-                  Duration
-                </span>
-                <span>{project.duration}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-slate-500" />
-                  Proposals
-                </span>
-                <span>{project.proposals}</span>
-              </div>
-              <button className="mt-2 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-400 px-4 py-3 text-sm font-bold text-white shadow-glow transition hover:scale-[1.02]">
-                View opportunity
-              </button>
-            </div>
-          </motion.article>
-        ))}
+      <div className="glass-card p-8 text-center text-slate-300">
+        Client project samples were removed until live listings are available.
       </div>
     </section>
   );
@@ -837,71 +537,8 @@ function FreelancerProfiles() {
         title="Profiles that convert demand into credibility."
         copy="Verification, portfolio previews, earnings proof, and skill tags help clients understand fit in seconds."
       />
-      <div className="grid gap-5 lg:grid-cols-3">
-        {freelancers.map((freelancer, index) => (
-          <motion.article
-            key={freelancer.name}
-            className="glass-card overflow-hidden p-5"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.08 }}
-            whileHover={{ y: -7 }}
-          >
-            <div className="flex items-center gap-4">
-              <div
-                className={`grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br ${freelancer.gradient} text-xl font-bold text-white shadow-lg`}
-              >
-                {freelancer.name
-                  .split(" ")
-                  .map((part) => part[0])
-                  .join("")}
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-bold text-white">{freelancer.name}</h3>
-                  <BadgeCheck className="h-5 w-5 fill-cyan-300 text-slate-950" />
-                </div>
-                <p className="text-sm text-slate-400">{freelancer.role}</p>
-              </div>
-            </div>
-            <div className="mt-5 rounded-2xl border border-white/10 bg-slate-950/40 p-4">
-              <div className="grid grid-cols-3 gap-3 text-center">
-                <div>
-                  <p className="text-sm text-slate-500">Rating</p>
-                  <p className="mt-1 font-bold text-white">{freelancer.rating}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-slate-500">Projects</p>
-                  <p className="mt-1 font-bold text-white">{freelancer.projects}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-slate-500">Earned</p>
-                  <p className="mt-1 font-bold text-white">{freelancer.earnings}</p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {freelancer.skills.map((skill) => (
-                <span key={skill} className="skill-badge">
-                  {skill}
-                </span>
-              ))}
-            </div>
-            <div className="mt-5 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
-              <div className="h-24 bg-[radial-gradient(circle_at_25%_25%,rgba(6,182,212,0.35),transparent_34%),linear-gradient(135deg,rgba(59,130,246,0.45),rgba(139,92,246,0.28))]" />
-              <div className="flex items-center justify-between p-4">
-                <span className="flex items-center gap-2 text-sm text-emerald-200">
-                  <span className="h-2 w-2 rounded-full bg-emerald-300" />
-                  {freelancer.availability}
-                </span>
-                <button className="text-sm font-semibold text-cyan-200" type="button">
-                  View portfolio
-                </button>
-              </div>
-            </div>
-          </motion.article>
-        ))}
+      <div className="glass-card p-8 text-center text-slate-300">
+        Freelancer profile samples were removed until real accounts are available.
       </div>
     </section>
   );
@@ -939,27 +576,8 @@ function AIRecommendation() {
                 <h3 className="text-xl font-bold text-white">Career intelligence</h3>
               </div>
             </div>
-            <div className="rounded-2xl bg-gradient-to-r from-blue-500/15 to-violet-500/15 p-4">
-              <p className="text-lg font-semibold leading-8 text-white">
-                Your Django + AWS skills match 82% of high-paying projects.
-              </p>
-              <p className="mt-2 text-sm text-slate-300">
-                Add AI agents and Stripe billing examples to unlock an estimated
-                $28/hr rate lift.
-              </p>
-            </div>
-            <div className="mt-5 grid gap-3 sm:grid-cols-3">
-              {[
-                ["Learn", "AI agents", "+41%"],
-                ["Watch", "Vector DBs", "+29%"],
-                ["Pitch", "SaaS APIs", "$9.2k avg"]
-              ].map(([label, value, delta]) => (
-                <div key={value} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                  <p className="text-xs uppercase tracking-[0.16em] text-slate-500">{label}</p>
-                  <p className="mt-2 font-bold text-white">{value}</p>
-                  <p className="mt-1 text-sm text-cyan-200">{delta}</p>
-                </div>
-              ))}
+            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-slate-300">
+              AI recommendations will appear here after live account and marketplace data are connected.
             </div>
           </div>
         </div>
@@ -998,22 +616,8 @@ function ChatPreview() {
               <ChevronDown className="h-4 w-4" />
             </button>
           </div>
-          <div className="space-y-4 p-5">
-            <div className="message-bubble left">
-              The analytics prototype looks strong. Could you add a market-demand view for AWS roles?
-            </div>
-            <div className="message-bubble right">
-              Yes. I can add a skill demand chart, hourly rate trend, and proposal competition score.
-            </div>
-            <div className="message-bubble left max-w-[80%]">
-              Perfect. Can you include it in the first milestone?
-            </div>
-            <div className="flex items-center gap-2 text-sm text-slate-400">
-              <span className="typing-dot" />
-              <span className="typing-dot animation-delay-150" />
-              <span className="typing-dot animation-delay-300" />
-              Nora is typing
-            </div>
+          <div className="space-y-4 p-5 text-slate-300">
+            Live chat previews were removed until authenticated conversations are connected.
           </div>
           <div className="border-t border-white/10 p-4">
             <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3">
@@ -1105,45 +709,14 @@ function Pricing() {
 }
 
 function Testimonials() {
-  const [active, setActive] = useState(0);
-  const testimonial = testimonials[active];
-
   return (
     <section className="section-shell">
       <SectionHeading
         eyebrow="Customer stories"
-        title="Freelancers and clients use GigPulse to move before the market is obvious."
+        title="Customer stories appear after live accounts are connected."
       />
-      <div className="glass-card mx-auto max-w-4xl p-6 text-center sm:p-10">
-        <div className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-500 font-bold text-white">
-          {testimonial.name
-            .split(" ")
-            .map((part) => part[0])
-            .join("")}
-        </div>
-        <motion.blockquote
-          key={testimonial.quote}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-display text-2xl font-semibold leading-snug text-white sm:text-3xl"
-        >
-          "{testimonial.quote}"
-        </motion.blockquote>
-        <p className="mt-6 font-bold text-cyan-100">{testimonial.name}</p>
-        <p className="text-sm text-slate-400">{testimonial.role}</p>
-        <div className="mt-8 flex justify-center gap-2">
-          {testimonials.map((item, index) => (
-            <button
-              key={item.name}
-              className={`h-2.5 rounded-full transition-all ${
-                active === index ? "w-10 bg-cyan-300" : "w-2.5 bg-white/20"
-              }`}
-              type="button"
-              onClick={() => setActive(index)}
-              aria-label={`Show testimonial ${index + 1}`}
-            />
-          ))}
-        </div>
+      <div className="glass-card mx-auto max-w-4xl p-8 text-center text-slate-300 sm:p-10">
+        Testimonials were removed because the site should not ship with fake client or freelancer quotes.
       </div>
     </section>
   );
@@ -1154,171 +727,11 @@ function Dashboard() {
     <section id="dashboard" className="section-shell">
       <SectionHeading
         eyebrow="Freelancer dashboard"
-        title="Your work, pipeline, analytics, and AI insights in one command center."
-        copy="The logged-in experience combines Stripe-style metrics, Linear-speed navigation, and market intelligence built for daily freelance decisions."
+        title="Your dashboard appears after a real account is connected."
+        copy="The demo metrics and sample sidebar content have been removed until the backend returns real user data."
       />
-      <div className="overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/70 shadow-2xl shadow-blue-950/40 backdrop-blur-2xl">
-        <div className="flex items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
-          <div className="flex items-center gap-3">
-            <button className="icon-button" type="button" aria-label="Toggle sidebar">
-              <PanelLeft className="h-4 w-4" />
-            </button>
-            <div>
-              <p className="text-sm text-slate-400">Welcome back</p>
-              <h3 className="text-xl font-bold text-white">Arjun's Pulse</h3>
-            </div>
-          </div>
-          <div className="hidden items-center gap-3 md:flex">
-            <div className="relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-              <input
-                className="h-10 w-72 rounded-full border border-white/10 bg-white/5 pl-9 pr-4 text-sm text-white outline-none"
-                placeholder="Search messages, jobs, insights"
-              />
-            </div>
-            <NewProposalButton />
-          </div>
-        </div>
-
-        <div className="grid lg:grid-cols-[260px_1fr]">
-          <aside className="border-b border-white/10 p-4 lg:border-b-0 lg:border-r">
-            <div className="flex gap-2 overflow-x-auto lg:grid lg:gap-2 lg:overflow-visible">
-              {sidebarItems.map(({ label, icon: Icon }, index) => (
-                <button
-                  key={label}
-                  className={`flex shrink-0 items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-medium transition ${
-                    index === 0
-                      ? "bg-gradient-to-r from-blue-500/25 to-cyan-400/15 text-white"
-                      : "text-slate-400 hover:bg-white/10 hover:text-white"
-                  }`}
-                  type="button"
-                >
-                  <Icon className="h-4 w-4" />
-                  {label}
-                </button>
-              ))}
-            </div>
-          </aside>
-
-          <main className="p-4 sm:p-6">
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {dashboardMetrics.map(({ label, value, delta, icon: Icon }) => (
-                <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 text-cyan-200">
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <span className="text-sm font-semibold text-emerald-200">{delta}</span>
-                  </div>
-                  <p className="mt-5 text-sm text-slate-400">{label}</p>
-                  <p className="mt-1 text-2xl font-bold text-white">{value}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5 grid gap-5 xl:grid-cols-[1.35fr_0.9fr]">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                <div className="mb-4 flex items-center justify-between">
-                  <div>
-                    <h4 className="text-lg font-bold text-white">Earnings analytics</h4>
-                    <p className="text-sm text-slate-400">Revenue, demand, and proposal momentum</p>
-                  </div>
-                  <span className="rounded-full bg-white/10 px-3 py-1 text-sm text-slate-300">
-                    90 days
-                  </span>
-                </div>
-                <LineSpark
-                  points={[28, 34, 31, 48, 46, 59, 71, 67, 82, 88, 84, 96]}
-                  color="#06B6D4"
-                  className="h-72 w-full"
-                />
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                <h4 className="text-lg font-bold text-white">AI recommendations</h4>
-                <div className="mt-4 space-y-3">
-                  {[
-                    "Publish AWS cost dashboard case study",
-                    "Bid on 3 SaaS API projects this week",
-                    "Add vector search to portfolio tags"
-                  ].map((item) => (
-                    <div key={item} className="flex items-start gap-3 rounded-2xl bg-slate-950/40 p-3">
-                      <Sparkles className="mt-0.5 h-4 w-4 text-cyan-200" />
-                      <p className="text-sm leading-6 text-slate-300">{item}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-5 rounded-2xl border border-dashed border-white/15 p-4">
-                  <p className="text-sm font-semibold text-white">Saved Jobs</p>
-                  <p className="mt-1 text-sm text-slate-500">
-                    No saved jobs match the current AI filter.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 grid gap-5 xl:grid-cols-3">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5 xl:col-span-2">
-                <div className="mb-4 flex items-center justify-between">
-                  <h4 className="text-lg font-bold text-white">Recent activity</h4>
-                  <button className="text-sm font-semibold text-cyan-200" type="button">
-                    View all
-                  </button>
-                </div>
-                <div className="space-y-3">
-                  {[
-                    ["Proposal accepted", "AI CRM dashboard", "2h ago"],
-                    ["Portfolio viewed", "Cloudlane CTO", "5h ago"],
-                    ["Milestone due", "Stripe billing redesign", "Tomorrow"]
-                  ].map(([event, detail, time]) => (
-                    <div key={event} className="flex items-center justify-between rounded-2xl bg-slate-950/40 p-4">
-                      <div className="flex items-center gap-3">
-                        <span className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-300/10 text-cyan-200">
-                          <Calendar className="h-4 w-4" />
-                        </span>
-                        <div>
-                          <p className="font-semibold text-white">{event}</p>
-                          <p className="text-sm text-slate-400">{detail}</p>
-                        </div>
-                      </div>
-                      <span className="text-sm text-slate-500">{time}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
-                <h4 className="text-lg font-bold text-white">Onboarding</h4>
-                <div className="mt-4 space-y-3">
-                  {["Connect portfolio", "Choose skill watchlist", "Send first smart proposal"].map(
-                    (item, index) => (
-                      <motion.div
-                        key={item}
-                        className="rounded-2xl bg-slate-950/40 p-4"
-                        initial={{ opacity: 0.4, x: 10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.12 }}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="grid h-7 w-7 place-items-center rounded-full bg-blue-500/20 text-sm font-bold text-blue-100">
-                            {index + 1}
-                          </span>
-                          <p className="font-medium text-white">{item}</p>
-                        </div>
-                      </motion.div>
-                    )
-                  )}
-                </div>
-                <div className="mt-5 space-y-2">
-                  <div className="skeleton-line w-full" />
-                  <div className="skeleton-line w-4/5" />
-                  <div className="skeleton-line w-2/3" />
-                </div>
-              </div>
-            </div>
-          </main>
-        </div>
+      <div className="glass-card p-8 text-center text-slate-300">
+        Dashboard cards, metrics, and sample tasks were removed until real user data is available.
       </div>
     </section>
   );
