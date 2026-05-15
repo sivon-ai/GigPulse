@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 
 export default function AuthModal({ open, onClose, type = "login" }) {
   const { login, register } = useAuth();
+  const [role, setRole] = useState("freelancer");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -21,7 +22,7 @@ export default function AuthModal({ open, onClose, type = "login" }) {
       if (type === "login") {
         await login({ email, password });
       } else {
-        await register({ email, password, username, full_name: fullName });
+        await register({ email, password, username, full_name: fullName, role });
       }
       onClose();
     } catch (err) {
@@ -44,6 +45,16 @@ export default function AuthModal({ open, onClose, type = "login" }) {
             <>
               <input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Full name" className="input" />
               <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" className="input" />
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2">
+                  <input type="radio" name="role" value="freelancer" checked={role === "freelancer"} onChange={() => setRole("freelancer")} />
+                  <span className="ml-1">Freelancer</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <input type="radio" name="role" value="client" checked={role === "client"} onChange={() => setRole("client")} />
+                  <span className="ml-1">Client</span>
+                </label>
+              </div>
             </>
           )}
           <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="input" />

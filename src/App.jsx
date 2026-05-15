@@ -367,6 +367,7 @@ function RadialMeter({ value, label }) {
 }
 
 function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
+  const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
@@ -388,7 +389,7 @@ function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
           ))}
         </div>
 
-        <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-3 lg:flex">
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
             <input
@@ -414,8 +415,21 @@ function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
           >
             {isLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </button>
-          <button onClick={onLoginClick} className="btn-ghost">Login</button>
-          <button onClick={onSignUpClick} className="btn-primary">Sign Up</button>
+          {user ? (
+            <>
+              {user.role === "client" ? (
+                <a href="#post" className="btn-primary">Post project</a>
+              ) : (
+                <a href="#dashboard" className="btn-primary">Dashboard</a>
+              )}
+              <button onClick={() => logout()} className="btn-ghost">Logout</button>
+            </>
+          ) : (
+            <>
+              <button onClick={onLoginClick} className="btn-ghost">Login</button>
+              <button onClick={onSignUpClick} className="btn-primary">Sign Up</button>
+            </>
+          )}
         </div>
 
         <button
@@ -1373,8 +1387,13 @@ function NewProposalButton() {
       window.dispatchEvent(new CustomEvent("openAuth", { detail: { type: "login" } }));
       return;
     }
-    // placeholder: open proposal creation flow
-    alert("Open New Proposal flow (not implemented)");
+    if (user.role === "client") {
+      // clients should post projects
+      window.location.href = "#post";
+      return;
+    }
+    // freelancers: open proposal creation flow (placeholder)
+    alert("Open New Proposal flow (freelancer)");
   }
 
   return (

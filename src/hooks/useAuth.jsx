@@ -47,6 +47,14 @@ export function AuthProvider({ children }) {
     return data.user;
   }
 
+  function isClient() {
+    return user?.role === "client";
+  }
+
+  function isFreelancer() {
+    return user?.role === "freelancer";
+  }
+
   function logout() {
     clearTokens();
     setUser(null);
