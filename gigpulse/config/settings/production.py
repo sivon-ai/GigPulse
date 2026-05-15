@@ -18,7 +18,7 @@ CACHES, CHANNEL_LAYERS = build_caches_and_channels(  # noqa: F405
 )
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = False  # noqa: F405
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)  # noqa: F405
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

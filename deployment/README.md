@@ -12,3 +12,5 @@ Quick usage (on EC2 instance):
 Notes:
 - These are templates and examples; adapt for your environment and security policies.
 - Ensure `SECRET_KEY`, database and storage credentials are provided via environment or systemd EnvironmentFile.
+- For hosted auth to work, configure HTTPS, `DJANGO_ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS`, and `CSRF_TRUSTED_ORIGINS` for the live domain.
+- The backend stores the refresh token in an HttpOnly cookie, so the site must be served over HTTPS in production.
