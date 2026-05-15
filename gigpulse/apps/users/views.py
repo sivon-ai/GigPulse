@@ -7,7 +7,9 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.conf import settings
+from datetime import timedelta
 
 from .models import EmailVerificationToken, PasswordResetToken, VerificationStatus
 from .serializers import (
@@ -29,6 +31,31 @@ User = get_user_model()
 class LoginView(TokenObtainPairView):
 	serializer_class = GigPulseTokenObtainPairSerializer
 
+	def post(self, request, *args, **kwargs):
+		serializer = self.get_serializer(data=request.data)
+		serializer.is_valid(raise_exception=True)
+		data = serializer.validated_data
+		# data usually contains 'access' and 'refresh'
+		access = data.get("access")
+		refresh = data.get("refresh")
+		user_data = UserMeSerializer(self.user).data if hasattr(self, "user") else UserMeSerializer(self.get_serializer().user).data
+
+		response = Response({"access": access, "user": user_data}, status=status.HTTP_200_OK)
+		# set refresh token as HttpOnly cookie
+		if refresh:
+			lifetime = getattr(settings, "SIMPLE_JWT", {}).get("REFRESH_TOKEN_LIFETIME")
+			max_age = int(lifetime.total_seconds()) if isinstance(lifetime, timedelta) else None
+			secure = not settings.DEBUG
+			response.set_cookie(
+				"refresh",
+				refresh,
+				httponly=True,
+				secure=secure,
+				samesite="Lax",
+				max_age=max_age,
+			)
+		return response
+
 
 class RegisterView(generics.CreateAPIView):
 	permission_classes = [permissions.AllowAny]
@@ -48,28 +75,58 @@ class RegisterView(generics.CreateAPIView):
 		user = self.perform_create(serializer)
 
 		refresh = RefreshToken.for_user(user)
-		output = {
-			"user": UserMeSerializer(user).data,
-			"tokens": {
-				"refresh": str(refresh),
-				"access": str(refresh.access_token),
-			},
-		}
+		access = str(refresh.access_token)
+		user_data = UserMeSerializer(user).data
+		output = {"user": user_data, "access": access}
 		headers = self.get_success_headers(serializer.data)
-		return Response(output, status=status.HTTP_201_CREATED, headers=headers)
+		response = Response(output, status=status.HTTP_201_CREATED, headers=headers)
+		# set refresh cookie
+		lifetime = getattr(settings, "SIMPLE_JWT", {}).get("REFRESH_TOKEN_LIFETIME")
+		max_age = int(lifetime.total_seconds()) if isinstance(lifetime, timedelta) else None
+		secure = not settings.DEBUG
+		response.set_cookie(
+			"refresh",
+			str(refresh),
+			httponly=True,
+			secure=secure,
+			samesite="Lax",
+			max_age=max_age,
+		)
+		return response
 
 
 class LogoutView(APIView):
 	permission_classes = [permissions.IsAuthenticated]
 
 	def post(self, request):
+		# attempt to blacklist refresh token provided in body
 		serializer = LogoutSerializer(data=request.data)
-		serializer.is_valid(raise_exception=True)
+		serializer.is_valid(raise_exception=False)
+		refresh = serializer.validated_data.get("refresh") if serializer.is_valid() else None
+		if not refresh:
+			# fallback to cookie
+			refresh = request.COOKIES.get("refresh")
+		if refresh:
+			token = RefreshToken(refresh)
+			token.blacklist()
+		response = Response(status=status.HTTP_204_NO_CONTENT)
+		# delete cookie
+		response.delete_cookie("refresh")
+		return response
 
-		refresh = serializer.validated_data["refresh"]
-		token = RefreshToken(refresh)
-		token.blacklist()
-		return Response(status=status.HTTP_204_NO_CONTENT)
+
+class CookieTokenRefreshView(TokenRefreshView):
+	"""Read refresh token from cookie if not provided in POST body."""
+
+	def post(self, request, *args, **kwargs):
+		data = request.data.copy() if hasattr(request, "data") else {}
+		if "refresh" not in data:
+			cookie_refresh = request.COOKIES.get("refresh")
+			if cookie_refresh:
+				data["refresh"] = cookie_refresh
+		serializer = self.get_serializer(data=data)
+		serializer.is_valid(raise_exception=True)
+		return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
 
 class MeView(generics.RetrieveUpdateAPIView):

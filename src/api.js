@@ -19,11 +19,10 @@ function clearTokens() {
 }
 
 async function refreshToken(refresh) {
-  const res = await fetch(`${API_BASE}/auth/refresh/`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ refresh }),
-  });
+  // try to refresh using cookie (HttpOnly) when available
+  const init = { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include" };
+  if (refresh) init.body = JSON.stringify({ refresh });
+  const res = await fetch(`${API_BASE}/auth/refresh/`, init);
   if (!res.ok) throw new Error("refresh_failed");
   return res.json();
 }

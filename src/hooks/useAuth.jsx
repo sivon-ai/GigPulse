@@ -19,6 +19,7 @@ export function AuthProvider({ children }) {
     const res = await fetch(`${API_BASE}/auth/login/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ email, password }),
     });
     if (!res.ok) {
@@ -35,6 +36,7 @@ export function AuthProvider({ children }) {
     const res = await fetch(`${API_BASE}/auth/register/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify(payload),
     });
     if (!res.ok) {
