@@ -17,7 +17,8 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
+from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
@@ -34,6 +35,12 @@ urlpatterns = [
     path("api/v1/", include("apps.analytics.urls")),
     path("api/v1/", include("apps.recommendations.urls")),
     path("api/v1/", include("apps.payments.urls")),
+]
+
+# Serve React SPA at root (index) and catch-all for client-side routing
+urlpatterns += [
+    path("", TemplateView.as_view(template_name="index.html"), name="home"),
+    re_path(r"^(?:.*)/?$", TemplateView.as_view(template_name="index.html"), name="spa-catchall"),
 ]
 
 if settings.DEBUG:
