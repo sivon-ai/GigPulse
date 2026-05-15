@@ -26,7 +26,8 @@ export default function AuthModal({ open, onClose, type = "login" }) {
       }
       onClose();
     } catch (err) {
-      setError(JSON.stringify(err));
+      const detail = err?.detail || err?.non_field_errors || err?.email || err?.password || err?.username || err?.role;
+      setError(Array.isArray(detail) ? detail.join(" ") : typeof detail === "string" ? detail : "Authentication failed. Please check your details.");
     } finally {
       setLoading(false);
     }

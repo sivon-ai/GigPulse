@@ -10,7 +10,7 @@ function getStoredTokens() {
 }
 
 function storeTokens(tokens, user) {
-  const payload = { tokens, user };
+  const payload = { tokens: tokens || null, user: user || null };
   localStorage.setItem("gp_auth", JSON.stringify(payload));
 }
 

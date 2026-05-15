@@ -27,9 +27,13 @@ export function AuthProvider({ children }) {
       throw err;
     }
     const data = await res.json();
-    storeTokens(data.tokens, data.user);
-    setUser(data.user);
-    return data.user;
+    const userData = data.user || null;
+    const accessToken = data?.tokens?.access || data.access || null;
+    if (accessToken || userData) {
+      storeTokens(accessToken ? { access: accessToken } : null, userData);
+    }
+    setUser(userData);
+    return userData;
   }
 
   async function register(payload) {
@@ -44,9 +48,13 @@ export function AuthProvider({ children }) {
       throw err;
     }
     const data = await res.json();
-    storeTokens(data.tokens, data.user);
-    setUser(data.user);
-    return data.user;
+    const userData = data.user || null;
+    const accessToken = data?.tokens?.access || data.access || null;
+    if (accessToken || userData) {
+      storeTokens(accessToken ? { access: accessToken } : null, userData);
+    }
+    setUser(userData);
+    return userData;
   }
 
   function isClient() {

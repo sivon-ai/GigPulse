@@ -35,12 +35,18 @@ class LoginView(TokenObtainPairView):
 		serializer = self.get_serializer(data=request.data)
 		serializer.is_valid(raise_exception=True)
 		data = serializer.validated_data
-		# data usually contains 'access' and 'refresh'
 		access = data.get("access")
 		refresh = data.get("refresh")
-		user_data = UserMeSerializer(self.user).data if hasattr(self, "user") else UserMeSerializer(self.get_serializer().user).data
+		user_data = UserMeSerializer(serializer.user).data
 
-		response = Response({"access": access, "user": user_data}, status=status.HTTP_200_OK)
+		response = Response(
+			{
+				"access": access,
+				"user": user_data,
+				"tokens": {"access": access},
+			},
+			status=status.HTTP_200_OK,
+		)
 		# set refresh token as HttpOnly cookie
 		if refresh:
 			lifetime = getattr(settings, "SIMPLE_JWT", {}).get("REFRESH_TOKEN_LIFETIME")
@@ -77,7 +83,7 @@ class RegisterView(generics.CreateAPIView):
 		refresh = RefreshToken.for_user(user)
 		access = str(refresh.access_token)
 		user_data = UserMeSerializer(user).data
-		output = {"user": user_data, "access": access}
+		output = {"user": user_data, "access": access, "tokens": {"access": access}}
 		headers = self.get_success_headers(serializer.data)
 		response = Response(output, status=status.HTTP_201_CREATED, headers=headers)
 		# set refresh cookie
