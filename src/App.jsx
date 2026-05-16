@@ -63,162 +63,20 @@ const marketingNavItems = [
   { label: "Pricing", href: "#pricing", icon: DollarSign }
 ];
 
-const stats = [
-  { label: "Active projects", value: 1284, suffix: "+", icon: Folder },
-  { label: "Verified freelancers", value: 842, suffix: "+", icon: Users },
-  { label: "Skill signals tracked", value: 96, suffix: "", icon: TrendingUp }
-];
+const stats = [];
 
-const tickerItems = [
-  "React demand +22%",
-  "AI workflow roles rising",
-  "Django APIs holding strong",
-  "Cloud migration budgets up",
-  "Product design briefs moving faster",
-  "Verified profiles win 2.4x more replies"
-];
+const tickerItems = [];
 
-const skills = [
-  {
-    name: "React",
-    demand: 94,
-    growth: 22,
-    rate: 4200,
-    competition: "Medium",
-    filters: ["Remote", "High rate", "Fast growth"],
-    points: [42, 48, 54, 58, 66, 74, 82],
-    tags: ["Frontend", "SaaS", "Design systems"]
-  },
-  {
-    name: "AI Workflows",
-    demand: 91,
-    growth: 31,
-    rate: 5200,
-    competition: "Low",
-    filters: ["Remote", "High rate", "Fast growth", "Low competition"],
-    points: [22, 26, 35, 44, 58, 71, 88],
-    tags: ["Automation", "Agents", "Operations"]
-  },
-  {
-    name: "Django",
-    demand: 86,
-    growth: 14,
-    rate: 3900,
-    competition: "Low",
-    filters: ["Remote", "Low competition"],
-    points: [48, 51, 53, 58, 61, 64, 69],
-    tags: ["Backend", "APIs", "Security"]
-  },
-  {
-    name: "AWS",
-    demand: 89,
-    growth: 18,
-    rate: 5600,
-    competition: "Medium",
-    filters: ["High rate", "Fast growth"],
-    points: [40, 43, 49, 55, 59, 67, 74],
-    tags: ["Cloud", "DevOps", "Deployments"]
-  },
-  {
-    name: "Product Design",
-    demand: 84,
-    growth: 12,
-    rate: 3600,
-    competition: "Medium",
-    filters: ["Remote"],
-    points: [52, 57, 54, 61, 66, 68, 72],
-    tags: ["UX", "Research", "Prototyping"]
-  },
-  {
-    name: "Data Engineering",
-    demand: 88,
-    growth: 19,
-    rate: 5000,
-    competition: "Low",
-    filters: ["High rate", "Fast growth", "Low competition"],
-    points: [36, 41, 45, 53, 57, 65, 78],
-    tags: ["Pipelines", "Analytics", "Warehousing"]
-  }
-];
+const skills = [];
 
-const projects = [
-  {
-    title: "Build a subscription analytics dashboard",
-    client: "MeterStack",
-    budget: "₹2.8L - ₹4.5L",
-    duration: "6 weeks",
-    match: 94,
-    tags: ["React", "Django", "Charts"],
-    urgency: "Hiring this week"
-  },
-  {
-    title: "AI-assisted onboarding workflow",
-    client: "Cloudlane",
-    budget: "₹3.2L - ₹5.8L",
-    duration: "8 weeks",
-    match: 91,
-    tags: ["AI Workflows", "UX", "APIs"],
-    urgency: "Fast growth niche"
-  },
-  {
-    title: "AWS deployment and reliability audit",
-    client: "Northstar Labs",
-    budget: "₹1.6L - ₹3.1L",
-    duration: "3 weeks",
-    match: 88,
-    tags: ["AWS", "DevOps", "Security"],
-    urgency: "Low competition"
-  }
-];
+const projects = [];
 
-const freelancers = [
-  {
-    name: "Priya Nair",
-    title: "Product Designer",
-    rate: "₹3,600/hr",
-    rating: "4.9",
-    score: "96%",
-    availability: "Available this week",
-    skills: ["UX", "Design systems", "Research"]
-  },
-  {
-    name: "Aarav Mehta",
-    title: "Senior React Engineer",
-    rate: "₹4,800/hr",
-    rating: "4.8",
-    score: "94%",
-    availability: "2 slots open",
-    skills: ["React", "TypeScript", "Stripe"]
-  },
-  {
-    name: "Neel Shah",
-    title: "Cloud Architect",
-    rate: "₹5,600/hr",
-    rating: "4.8",
-    score: "92%",
-    availability: "Starts Monday",
-    skills: ["AWS", "Django", "Reliability"]
-  }
-];
+  // Demo pricing removed — populate from backend when available
+  const tiers = [];
 
-const testimonials = [
-  {
-    quote: "GigPulse helped us shortlist verified talent faster and keep every proposal tied to real market signals.",
-    name: "Sana Rao",
-    role: "Founder, ProductOps Studio"
-  },
-  {
-    quote: "The skill demand view made it obvious where to update my portfolio before pitching premium clients.",
-    name: "Karan Iyer",
-    role: "Independent full-stack developer"
-  }
-];
+const testimonials = [];
 
-const dashboardMetrics = [
-  { label: "Saved opportunities", value: "18", detail: "5 high-fit roles added this week" },
-  { label: "Proposal win rate", value: "42%", detail: "+8% after profile updates" },
-  { label: "Average rate", value: "₹4,700/hr", detail: "Based on matched skill clusters" }
-];
+const dashboardMetrics = [];
 
 const sidebarItems = [
   { label: "Overview", icon: LayoutDashboard },
@@ -448,7 +306,8 @@ function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick, onNavigat
     setNotificationsOpen(false);
   }
 
-  const notifications = ["React jobs spiked 22% today", "New client reply from MeterStack", "AI agents added to your watchlist"];
+  // Demo notifications cleared — will load from API
+  const notifications = [];
 
   return (
     <>
@@ -1254,8 +1113,8 @@ function ChatPreview() {
                 <span className="absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full border-2 border-slate-950 bg-emerald-300" />
               </div>
               <div>
-                <h3 className="font-bold text-white">Nora at Cloudlane</h3>
-                <p className="text-sm text-slate-400">Online, reviewing proposal</p>
+                <h3 className="font-bold text-white">Client conversation</h3>
+                <p className="text-sm text-slate-400">Online</p>
               </div>
             </div>
             <button
@@ -1303,27 +1162,8 @@ function ChatPreview() {
 
 function Pricing() {
   const [selectedPlan, setSelectedPlan] = useState("");
-  const tiers = [
-    {
-      name: "Free",
-      price: "₹0",
-      copy: "For freelancers exploring demand signals.",
-      features: ["Basic project search", "5 tracked skills", "Portfolio checklist"]
-    },
-    {
-      name: "Pro Freelancer",
-      price: "₹1,499",
-      copy: "For serious freelancers growing revenue.",
-      features: ["Unlimited skill trends", "AI recommendations", "Client chat insights"],
-      popular: true
-    },
-    {
-      name: "Agency",
-      price: "₹5,999",
-      copy: "For teams matching talent to demand.",
-      features: ["Team dashboard", "Talent pipeline", "Advanced market exports"]
-    }
-  ];
+  // Demo pricing removed — populate tiers from API
+  const tiers = [];
 
   return (
     <section id="pricing" className="section-shell">
@@ -1541,80 +1381,12 @@ function Footer() {
   );
 }
 
-function ClientApp({ onNavigate }) {
-  const metrics = [
-    { label: "Open roles", value: "12", detail: "3 awaiting review" },
-    { label: "Active projects", value: "6", detail: "2 due this week" },
-    { label: "Avg time to hire", value: "4.2 days", detail: "-18% vs last month" },
-    { label: "Spend in escrow", value: "₹8.6L", detail: "Across 9 milestones" }
-  ];
-
-  const proposalPipeline = [
-    { stage: "New", count: 18, color: "bg-blue-500/10 text-blue-700" },
-    { stage: "Shortlisted", count: 7, color: "bg-cyan-500/10 text-cyan-700" },
-    { stage: "Interview", count: 4, color: "bg-emerald-500/10 text-emerald-700" },
-    { stage: "Hired", count: 2, color: "bg-slate-900/10 text-slate-700" }
-  ];
-
-  const proposals = [
-    { name: "Aarav Mehta", role: "Senior React Engineer", rate: "₹4,800/hr", score: "92%", status: "Interview" },
-    { name: "Priya Nair", role: "Product Designer", rate: "₹3,600/hr", score: "88%", status: "Shortlisted" },
-    { name: "Daniel Chow", role: "Data Engineer", rate: "₹5,200/hr", score: "84%", status: "New" },
-  ];
-
-  const comparisons = [
-    { name: "Zara Patel", title: "Full-stack Lead", rating: "4.9", projects: "48", badges: ["Verified", "Top 3%"], match: "96%" },
-    { name: "Neel Shah", title: "Cloud Architect", rating: "4.8", projects: "38", badges: ["Verified", "Fast responder"], match: "93%" },
-    { name: "Maya Collins", title: "Product Strategist", rating: "4.7", projects: "31", badges: ["Verified", "AI-ready"], match: "91%" }
-  ];
-
-  const milestones = [
-    { title: "Discovery & kickoff", amount: "₹1.2L", due: "May 22", status: "Funded" },
-    { title: "Design system delivery", amount: "₹2.8L", due: "Jun 3", status: "In review" },
-    { title: "Sprint 1 build", amount: "₹3.1L", due: "Jun 14", status: "Upcoming" }
-  ];
-
-  const notifications = [
-    { title: "3 proposals require feedback", time: "10 min ago" },
-    { title: "Escrow for Project Delta funded", time: "2 hours ago" },
-    { title: "AI match update: 4 new top-fit freelancers", time: "Yesterday" }
-  ];
-
-  const [notice, setNotice] = useState("");
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
-  const [projectDraft, setProjectDraft] = useState({
-    title: "",
-    scope: "",
-    budget: "",
-    timeline: ""
-  });
-  const [projectSkills, setProjectSkills] = useState(["Product design", "React", "Brand systems", "Analytics"]);
-  const [publishedProjects, setPublishedProjects] = useState([]);
-  const [clientMessages, setClientMessages] = useState([
-    { side: "left", text: "Hi Sivon, milestone 1 design files are ready for review." },
-    { side: "right", text: "Thanks! I will review and share feedback by EOD." }
-  ]);
-  const [clientMessage, setClientMessage] = useState("");
-  const [clientMilestones, setClientMilestones] = useState(milestones);
-  const [releasedTotal, setReleasedTotal] = useState(0);
-
-  function notify(message) {
-    setNotice(message);
-  }
-
-  function updateProjectDraft(field, value) {
-    setProjectDraft((current) => ({ ...current, [field]: value }));
-  }
-
-  function addProjectSkill() {
-    const options = ["AI workflows", "Django", "AWS", "Data pipelines"];
-    const nextSkill = options.find((skill) => !projectSkills.includes(skill));
-    if (!nextSkill) {
-      notify("All suggested skills are already added.");
-      return;
-    }
-    setProjectSkills((current) => [...current, nextSkill]);
-    notify(`${nextSkill} added to required skills.`);
+function FreelancerApp({ onNavigate }) {
+  // Demo data removed — populate from backend
+  const dashboardStats = [];
+  const jobMatches = [];
+  const proposals = [];
+  const portfolioHighlights = [];
   }
 
   function publishProject() {
@@ -1827,9 +1599,9 @@ function ClientApp({ onNavigate }) {
                 <p className="text-sm font-semibold text-slate-900">Activity timeline</p>
                 <div className="mt-4 space-y-4">
                   {[
-                    { title: "New proposal received", meta: "Product design · 12 minutes ago" },
-                    { title: "Milestone approved", meta: "Fintech revamp · 2 hours ago" },
-                    { title: "Contract signed", meta: "Cloud migration · Yesterday" }
+                    { title: "New proposal received", meta: "Project update · 12 minutes ago" },
+                    { title: "Milestone approved", meta: "Milestone · 2 hours ago" },
+                    { title: "Contract signed", meta: "Contract · Yesterday" }
                   ].map((item) => (
                     <div key={item.title} className="flex items-start gap-3">
                       <span className="mt-1 h-2 w-2 rounded-full bg-blue-500" />
@@ -1924,12 +1696,12 @@ function ClientApp({ onNavigate }) {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="grid gap-2">
                     <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Budget range</label>
-                    <input
-                      value={projectDraft.budget}
-                      onChange={(e) => updateProjectDraft("budget", e.target.value)}
-                      className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus:border-blue-400"
-                      placeholder="₹3L - ₹6L"
-                    />
+                      <input
+                        value={projectDraft.budget}
+                        onChange={(e) => updateProjectDraft("budget", e.target.value)}
+                        className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus:border-blue-400"
+                        placeholder="e.g., 3L - 6L"
+                      />
                   </div>
                   <div className="grid gap-2">
                     <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Timeline</label>
@@ -2086,9 +1858,9 @@ function ClientApp({ onNavigate }) {
               <div className="client-card">
                 <p className="text-sm font-semibold text-slate-900">Escrow status</p>
                 <div className="mt-4 space-y-3 text-sm text-slate-600">
-                  <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between">
                     <span>Escrow funded</span>
-                    <span className="font-semibold text-slate-900">₹8.6L</span>
+                    <span className="font-semibold text-slate-900">—</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Released milestones</span>
@@ -2157,64 +1929,13 @@ function ClientApp({ onNavigate }) {
 }
 
 function FreelancerApp({ onNavigate }) {
-  const dashboardStats = [
-    { label: "Earnings this month", value: "₹3.4L", detail: "+18% vs last month" },
-    { label: "Active proposals", value: "7", detail: "2 awaiting feedback" },
-    { label: "Profile strength", value: "92%", detail: "Top 10% in your niche" },
-    { label: "New job matches", value: "14", detail: "AI-ranked for you" }
-  ];
-
-  const jobMatches = [
-    { title: "Product redesign for fintech app", budget: "₹2.5L", tags: ["UI/UX", "Figma", "Design system"], match: "94%" },
-    { title: "Framer marketing site build", budget: "₹1.1L", tags: ["Framer", "Webflow", "Motion"], match: "91%" },
-    { title: "Creator marketplace dashboard", budget: "₹3.2L", tags: ["React", "Analytics", "SaaS"], match: "89%" }
-  ];
-
-  const proposals = [
-    { name: "Sprint 0 discovery", status: "Draft", client: "Nova Labs" },
-    { name: "Design system refresh", status: "Sent", client: "Arden Finance" },
-    { name: "Growth landing page", status: "Negotiation", client: "Orbit Cloud" }
-  ];
-
-  const portfolioHighlights = [
-    { title: "Fintech onboarding", role: "Product designer" },
-    { title: "Creator studio", role: "Brand + UX" },
-    { title: "SaaS analytics", role: "Design systems" },
-    { title: "Healthtech mobile", role: "UX research" }
-  ];
-
-  const achievements = [
-    { title: "Top 5% Response Rate", detail: "Replies within 3 hours" },
-    { title: "Verified delivery", detail: "26 projects completed" },
-    { title: "Client love", detail: "4.9 average rating" }
-  ];
-
-  const skillGrowth = [
-    { label: "Product strategy", value: 78 },
-    { label: "Motion design", value: 66 },
-    { label: "AI workflows", value: 72 },
-    { label: "Client comms", value: 88 }
-  ];
-
-  const [notice, setNotice] = useState("");
-  const [profileRefreshes, setProfileRefreshes] = useState(0);
-  const [filteredJobs, setFilteredJobs] = useState(false);
-  const [proposalList, setProposalList] = useState(proposals);
-  const [freelancerMessages, setFreelancerMessages] = useState([
-    { side: "left", text: "We love the direction. Can you explore a darker hero?" },
-    { side: "right", text: "Absolutely. I’ll share two variants by tomorrow." }
-  ]);
-  const [freelancerReply, setFreelancerReply] = useState("");
-  const [weeklyGoalSet, setWeeklyGoalSet] = useState(false);
-
-  const visibleJobMatches = filteredJobs
-    ? jobMatches.filter((job) => Number.parseInt(job.match, 10) >= 90)
-    : jobMatches;
-
-  function notify(message) {
-    setNotice(message);
-  }
-
+  // Demo data removed — arrays are empty and will be populated from backend
+  const dashboardStats = [];
+  const jobMatches = [];
+  const proposals = [];
+  const portfolioHighlights = [];
+  const achievements = [];
+  const skillGrowth = [];
   function sharePortfolio() {
     navigator.clipboard?.writeText(window.location.origin + "/freelancer").catch(() => {});
     notify("Portfolio link copied for sharing.");
@@ -2229,7 +1950,7 @@ function FreelancerApp({ onNavigate }) {
     const nextProposal = {
       name: "AI workflow implementation",
       status: "Draft",
-      client: "Cloudlane"
+      client: ""
     };
     setProposalList((current) => [nextProposal, ...current]);
     notify("New proposal draft generated in the tracker.");
@@ -2240,7 +1961,7 @@ function FreelancerApp({ onNavigate }) {
     if (!trimmed) return;
     setFreelancerMessages((current) => [...current, { side: "right", text: trimmed }]);
     setFreelancerReply("");
-    notify("Reply sent to Orbit Cloud.");
+    notify("Reply sent.");
   }
 
   return (
@@ -2388,7 +2109,7 @@ function FreelancerApp({ onNavigate }) {
                   ))}
                 </div>
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {["Fintech", "Creator tools", "SaaS", "Brand systems"].map((tag) => (
+                  {["Product", "Design", "SaaS", "Brand"].map((tag) => (
                     <span key={tag} className="freelancer-tag">{tag}</span>
                   ))}
                 </div>
@@ -2500,7 +2221,7 @@ function FreelancerApp({ onNavigate }) {
                 <div className="mt-4 space-y-3 text-sm text-slate-300">
                   {[
                     "Suggested intro referencing the client’s KPIs",
-                    "Highlight portfolio piece: Fintech onboarding",
+                    "Highlight a relevant portfolio piece",
                     "Draft timeline and milestone breakdown"
                   ].map((line) => (
                     <div key={line} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
@@ -2537,10 +2258,7 @@ function FreelancerApp({ onNavigate }) {
               <div className="freelancer-card">
                 <p className="text-sm font-semibold text-white">Upcoming payouts</p>
                 <div className="mt-4 space-y-3 text-sm text-slate-300">
-                  {[
-                    { title: "Fintech onboarding", value: "₹1.4L", date: "May 25" },
-                    { title: "Creator studio", value: "₹1.1L", date: "Jun 2" }
-                  ].map((item) => (
+                  {[].map((item) => (
                     <div key={item.title} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
                       <div>
                         <p className="text-sm font-semibold text-white">{item.title}</p>
@@ -2564,7 +2282,7 @@ function FreelancerApp({ onNavigate }) {
               <div className="freelancer-card">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold text-white">Active thread</p>
-                  <span className="freelancer-pill">Orbit Cloud</span>
+                  <span className="freelancer-pill">Client</span>
                 </div>
                 <div className="mt-4 space-y-3 text-sm text-slate-300">
                   {freelancerMessages.map((message, index) => (
