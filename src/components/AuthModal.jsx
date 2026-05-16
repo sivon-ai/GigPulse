@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../hooks/useAuth";
+import { ArrowRight, Mail, ShieldCheck, UserRound } from "lucide-react";
+
+function flattenErrors(err) {
+  const details = err?.detail || err?.non_field_errors || err;
+  if (!details) return "Authentication failed. Please check your details.";
+  if (typeof details === "string") return details;
+  if (Array.isArray(details)) return details.join(" ");
+  return Object.values(details)
+    .flat()
+    .filter(Boolean)
+    .join(" ") || "Authentication failed. Please check your details.";
+}
 
 export default function AuthModal({ open, onClose, type = "login" }) {
   const { login, register } = useAuth();
@@ -26,46 +38,174 @@ export default function AuthModal({ open, onClose, type = "login" }) {
       }
       onClose();
     } catch (err) {
-      const detail = err?.detail || err?.non_field_errors || err?.email || err?.password || err?.username || err?.role;
-      setError(Array.isArray(detail) ? detail.join(" ") : typeof detail === "string" ? detail : "Authentication failed. Please check your details.");
+      setError(flattenErrors(err));
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-black/40">
+    <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/70 px-4 backdrop-blur-md">
       <motion.div
-        initial={{ scale: 0.98, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        className="w-full max-w-md rounded-2xl bg-slate-950/95 p-6"
+        initial={{ scale: 0.96, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ duration: 0.22 }}
+        className="w-full max-w-4xl overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/95 shadow-2xl shadow-blue-950/50"
       >
-        <h3 className="mb-4 text-xl font-bold text-white">{type === "login" ? "Login" : "Create account"}</h3>
-        <form onSubmit={handleSubmit} className="grid gap-3">
-          {type === "register" && (
-            <>
-              <input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Full name" className="input" />
-              <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" className="input" />
-              <div className="flex items-center gap-3">
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="role" value="freelancer" checked={role === "freelancer"} onChange={() => setRole("freelancer")} />
-                  <span className="ml-1">Freelancer</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input type="radio" name="role" value="client" checked={role === "client"} onChange={() => setRole("client")} />
-                  <span className="ml-1">Client</span>
-                </label>
+        <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.26),transparent_36%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(8,15,31,0.98))] p-8 lg:border-b-0 lg:border-r">
+            <div className="absolute inset-0 opacity-40 animated-grid" />
+            <div className="relative">
+              <span className="mb-4 inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100">
+                Secure access
+              </span>
+              <h3 className="text-3xl font-bold text-white">
+                {type === "login" ? "Welcome back." : "Create your GigPulse account."}
+              </h3>
+              <p className="mt-4 max-w-sm text-sm leading-7 text-slate-300">
+                {type === "login"
+                  ? "Sign in to continue tracking projects, managing proposals, and reading live market signals."
+                  : "Join GigPulse to discover demand, save work, and move faster on the right freelance opportunities."}
+              </p>
+
+              <div className="mt-8 space-y-4">
+                {[
+                  {
+                    icon: ShieldCheck,
+                    title: "Protected sessions",
+                    copy: "JWT auth with refresh cookies keeps sessions stable across devices."
+                  },
+                  {
+                    icon: UserRound,
+                    title: "Role-aware onboarding",
+                    copy: "Choose freelancer or client so the dashboard matches your workflow."
+                  },
+                  {
+                    icon: ArrowRight,
+                    title: "Fast onboarding",
+                    copy: "Account creation is lightweight and does not block on verification email delivery."
+                  }
+                ].map(({ icon: Icon, title, copy }) => (
+                  <div key={title} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-300/10 text-cyan-200">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-white">{title}</p>
+                      <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </>
-          )}
-          <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="input" />
-          <input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" type="password" className="input" />
-          {error && <div className="text-sm text-rose-400">{error}</div>}
-          <div className="mt-4 flex justify-end gap-2">
-            <button type="button" onClick={onClose} className="btn-ghost">Cancel</button>
-            <button type="submit" className="btn-primary" disabled={loading}>{loading ? "..." : type === "login" ? "Login" : "Create"}</button>
+            </div>
           </div>
-        </form>
+
+          <div className="p-6 sm:p-8">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm uppercase tracking-[0.22em] text-cyan-300">{type === "login" ? "Login" : "Sign up"}</p>
+                <h3 className="mt-1 text-2xl font-bold text-white">{type === "login" ? "Access your dashboard" : "Set up your profile"}</h3>
+              </div>
+              <button
+                type="button"
+                onClick={onClose}
+                className="icon-button"
+                aria-label="Close modal"
+              >
+                ×
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="grid gap-4">
+              {type === "register" && (
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <label className="grid gap-2 text-sm text-slate-300">
+                    Full name
+                    <input
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="Your full name"
+                      className="input h-12"
+                      autoComplete="name"
+                    />
+                  </label>
+                  <label className="grid gap-2 text-sm text-slate-300">
+                    Username
+                    <input
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="your-handle"
+                      className="input h-12"
+                      autoComplete="username"
+                    />
+                  </label>
+                </div>
+              )}
+
+              <label className="grid gap-2 text-sm text-slate-300">
+                Email address
+                <div className="relative">
+                  <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="name@company.com"
+                    className="input h-12 pl-11"
+                    type="email"
+                    autoComplete="email"
+                  />
+                </div>
+              </label>
+
+              <label className="grid gap-2 text-sm text-slate-300">
+                Password
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter a secure password"
+                  type="password"
+                  className="input h-12"
+                  autoComplete={type === "login" ? "current-password" : "new-password"}
+                />
+              </label>
+
+              {type === "register" && (
+                <div className="grid gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                  <p className="text-sm font-semibold text-white">Account type</p>
+                  <div className="flex flex-wrap gap-3">
+                    <label className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition ${role === "freelancer" ? "border-cyan-300/40 bg-cyan-300/10 text-white" : "border-white/10 bg-white/5 text-slate-300"}`}>
+                      <input type="radio" name="role" value="freelancer" checked={role === "freelancer"} onChange={() => setRole("freelancer")} />
+                      Freelancer
+                    </label>
+                    <label className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm transition ${role === "client" ? "border-cyan-300/40 bg-cyan-300/10 text-white" : "border-white/10 bg-white/5 text-slate-300"}`}>
+                      <input type="radio" name="role" value="client" checked={role === "client"} onChange={() => setRole("client")} />
+                      Client
+                    </label>
+                  </div>
+                </div>
+              )}
+
+              {error && (
+                <div className="rounded-2xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm leading-6 text-rose-200">
+                  {error}
+                </div>
+              )}
+
+              <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:justify-end">
+                <button type="button" onClick={onClose} className="btn-ghost justify-center sm:min-w-28">
+                  Cancel
+                </button>
+                <button type="submit" className="btn-primary justify-center sm:min-w-32" disabled={loading}>
+                  {loading ? "Please wait" : type === "login" ? "Login" : "Create account"}
+                </button>
+              </div>
+
+              <p className="text-xs leading-6 text-slate-400">
+                By continuing, you agree to use GigPulse responsibly. We only use your details to create and secure your account.
+              </p>
+            </form>
+          </div>
+        </div>
       </motion.div>
     </div>
   );

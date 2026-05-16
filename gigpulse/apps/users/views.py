@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import logging
+
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from django.shortcuts import get_object_or_404
@@ -26,6 +28,7 @@ from .serializers import (
 from .tasks import send_password_reset_email_task, send_verification_email_task
 
 User = get_user_model()
+logger = logging.getLogger(__name__)
 
 
 class LoginView(TokenObtainPairView):
@@ -71,7 +74,14 @@ class RegisterView(generics.CreateAPIView):
 	def perform_create(self, serializer):
 		user = serializer.save()
 		token = EmailVerificationToken.issue(user=user)
-		send_verification_email_task.delay(user.id, str(token.token))
+
+		def queue_verification_email() -> None:
+			try:
+				send_verification_email_task.delay(user.id, str(token.token))
+			except Exception:
+				logger.exception("Failed to queue verification email for user_id=%s", user.id)
+
+		transaction.on_commit(queue_verification_email)
 		return user
 
 	def create(self, request, *args, **kwargs):
