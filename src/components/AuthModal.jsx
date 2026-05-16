@@ -152,7 +152,7 @@ export default function AuthModal({ open, onClose, type = "login", variant = "mo
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="Your full name"
-                      className="input h-12"
+                      className="input h-12 w-full"
                       autoComplete="name"
                     />
                   </label>
@@ -162,7 +162,7 @@ export default function AuthModal({ open, onClose, type = "login", variant = "mo
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       placeholder="your-handle"
-                      className="input h-12"
+                      className="input h-12 w-full"
                       autoComplete="username"
                     />
                   </label>
@@ -177,7 +177,7 @@ export default function AuthModal({ open, onClose, type = "login", variant = "mo
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@company.com"
-                    className="input h-12 pl-11"
+                    className="input h-12 w-full pl-11"
                     type="email"
                     autoComplete="email"
                   />
@@ -191,7 +191,7 @@ export default function AuthModal({ open, onClose, type = "login", variant = "mo
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter a secure password"
                   type="password"
-                  className="input h-12"
+                  className="input h-12 w-full"
                   autoComplete={type === "login" ? "current-password" : "new-password"}
                 />
               </label>

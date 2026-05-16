@@ -54,22 +54,171 @@ import gigpulseLogo from "./assets/gigpulse-logo.svg";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import AuthModal from "./components/AuthModal";
 
-const navItems = [
-  ["Home", "#home"],
-  ["Explore Projects", "#projects"],
-  ["Market Trends", "#trends"],
-  ["Freelancers", "#freelancers"],
-  ["Dashboard", "#dashboard"],
-  ["Pricing", "#pricing"]
+const marketingNavItems = [
+  { label: "Home", href: "#home", icon: Home },
+  { label: "Explore Projects", href: "#projects", icon: Folder },
+  { label: "Market Trends", href: "#trends", icon: LineChart },
+  { label: "Freelancers", href: "#freelancers", icon: Users },
+  { label: "Dashboard", href: "#dashboard", icon: LayoutDashboard },
+  { label: "Pricing", href: "#pricing", icon: DollarSign }
 ];
 
-const stats = [];
-const tickerItems = [];
-const skills = [];
-const projects = [];
-const freelancers = [];
-const testimonials = [];
-const dashboardMetrics = [];
+const stats = [
+  { label: "Active projects", value: 1284, suffix: "+", icon: Folder },
+  { label: "Verified freelancers", value: 842, suffix: "+", icon: Users },
+  { label: "Skill signals tracked", value: 96, suffix: "", icon: TrendingUp }
+];
+
+const tickerItems = [
+  "React demand +22%",
+  "AI workflow roles rising",
+  "Django APIs holding strong",
+  "Cloud migration budgets up",
+  "Product design briefs moving faster",
+  "Verified profiles win 2.4x more replies"
+];
+
+const skills = [
+  {
+    name: "React",
+    demand: 94,
+    growth: 22,
+    rate: 4200,
+    competition: "Medium",
+    filters: ["Remote", "High rate", "Fast growth"],
+    points: [42, 48, 54, 58, 66, 74, 82],
+    tags: ["Frontend", "SaaS", "Design systems"]
+  },
+  {
+    name: "AI Workflows",
+    demand: 91,
+    growth: 31,
+    rate: 5200,
+    competition: "Low",
+    filters: ["Remote", "High rate", "Fast growth", "Low competition"],
+    points: [22, 26, 35, 44, 58, 71, 88],
+    tags: ["Automation", "Agents", "Operations"]
+  },
+  {
+    name: "Django",
+    demand: 86,
+    growth: 14,
+    rate: 3900,
+    competition: "Low",
+    filters: ["Remote", "Low competition"],
+    points: [48, 51, 53, 58, 61, 64, 69],
+    tags: ["Backend", "APIs", "Security"]
+  },
+  {
+    name: "AWS",
+    demand: 89,
+    growth: 18,
+    rate: 5600,
+    competition: "Medium",
+    filters: ["High rate", "Fast growth"],
+    points: [40, 43, 49, 55, 59, 67, 74],
+    tags: ["Cloud", "DevOps", "Deployments"]
+  },
+  {
+    name: "Product Design",
+    demand: 84,
+    growth: 12,
+    rate: 3600,
+    competition: "Medium",
+    filters: ["Remote"],
+    points: [52, 57, 54, 61, 66, 68, 72],
+    tags: ["UX", "Research", "Prototyping"]
+  },
+  {
+    name: "Data Engineering",
+    demand: 88,
+    growth: 19,
+    rate: 5000,
+    competition: "Low",
+    filters: ["High rate", "Fast growth", "Low competition"],
+    points: [36, 41, 45, 53, 57, 65, 78],
+    tags: ["Pipelines", "Analytics", "Warehousing"]
+  }
+];
+
+const projects = [
+  {
+    title: "Build a subscription analytics dashboard",
+    client: "MeterStack",
+    budget: "₹2.8L - ₹4.5L",
+    duration: "6 weeks",
+    match: 94,
+    tags: ["React", "Django", "Charts"],
+    urgency: "Hiring this week"
+  },
+  {
+    title: "AI-assisted onboarding workflow",
+    client: "Cloudlane",
+    budget: "₹3.2L - ₹5.8L",
+    duration: "8 weeks",
+    match: 91,
+    tags: ["AI Workflows", "UX", "APIs"],
+    urgency: "Fast growth niche"
+  },
+  {
+    title: "AWS deployment and reliability audit",
+    client: "Northstar Labs",
+    budget: "₹1.6L - ₹3.1L",
+    duration: "3 weeks",
+    match: 88,
+    tags: ["AWS", "DevOps", "Security"],
+    urgency: "Low competition"
+  }
+];
+
+const freelancers = [
+  {
+    name: "Priya Nair",
+    title: "Product Designer",
+    rate: "₹3,600/hr",
+    rating: "4.9",
+    score: "96%",
+    availability: "Available this week",
+    skills: ["UX", "Design systems", "Research"]
+  },
+  {
+    name: "Aarav Mehta",
+    title: "Senior React Engineer",
+    rate: "₹4,800/hr",
+    rating: "4.8",
+    score: "94%",
+    availability: "2 slots open",
+    skills: ["React", "TypeScript", "Stripe"]
+  },
+  {
+    name: "Neel Shah",
+    title: "Cloud Architect",
+    rate: "₹5,600/hr",
+    rating: "4.8",
+    score: "92%",
+    availability: "Starts Monday",
+    skills: ["AWS", "Django", "Reliability"]
+  }
+];
+
+const testimonials = [
+  {
+    quote: "GigPulse helped us shortlist verified talent faster and keep every proposal tied to real market signals.",
+    name: "Sana Rao",
+    role: "Founder, ProductOps Studio"
+  },
+  {
+    quote: "The skill demand view made it obvious where to update my portfolio before pitching premium clients.",
+    name: "Karan Iyer",
+    role: "Independent full-stack developer"
+  }
+];
+
+const dashboardMetrics = [
+  { label: "Saved opportunities", value: "18", detail: "5 high-fit roles added this week" },
+  { label: "Proposal win rate", value: "42%", detail: "+8% after profile updates" },
+  { label: "Average rate", value: "₹4,700/hr", detail: "Based on matched skill clusters" }
+];
 
 const sidebarItems = [
   { label: "Overview", icon: LayoutDashboard },
@@ -249,180 +398,293 @@ function RadialMeter({ value, label }) {
   );
 }
 
+function ActionBanner({ message, tone = "dark" }) {
+  if (!message) return null;
+
+  const toneClass =
+    tone === "light"
+      ? "border-blue-200 bg-blue-50 text-blue-800"
+      : "border-cyan-300/20 bg-cyan-300/10 text-cyan-100";
+
+  return (
+    <div className={`rounded-2xl border px-4 py-3 text-sm leading-6 ${toneClass}`}>
+      {message}
+    </div>
+  );
+}
+
+function scrollToSection(id) {
+  const element = document.querySelector(id);
+  if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick, onNavigate }) {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const searchResults = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    if (query.length < 2) return [];
+    return [
+      ...skills.map((item) => ({ type: "Skill", label: item.name, href: "#trends" })),
+      ...projects.map((item) => ({ type: "Project", label: item.title, href: "#projects" })),
+      ...freelancers.map((item) => ({ type: "Talent", label: item.name, href: "#freelancers" }))
+    ]
+      .filter((item) => item.label.toLowerCase().includes(query))
+      .slice(0, 5);
+  }, [searchTerm]);
+
+  function handleSearchSubmit(e) {
+    e.preventDefault();
+    const firstResult = searchResults[0];
+    if (firstResult) {
+      window.location.hash = firstResult.href;
+      scrollToSection(firstResult.href);
+    } else if (searchTerm.trim()) {
+      scrollToSection("#trends");
+    }
+    setNotificationsOpen(false);
+  }
+
+  const notifications = ["React jobs spiked 22% today", "New client reply from MeterStack", "AI agents added to your watchlist"];
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/55 backdrop-blur-2xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <a href="#home" className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-white/10 shadow-glow">
+    <>
+      <aside className="fixed inset-y-0 left-0 z-50 hidden w-72 flex-col border-r border-white/10 bg-slate-950/[0.92] px-5 py-5 shadow-2xl shadow-blue-950/30 backdrop-blur-2xl lg:flex">
+        <a href="#home" className="flex items-center gap-3 rounded-2xl px-2 py-2">
+          <span className="grid h-11 w-11 place-items-center rounded-2xl bg-white/10 shadow-glow">
             <img src={gigpulseLogo} alt="GigPulse" className="h-8 w-8" />
           </span>
-          <span className="font-display text-xl font-bold text-white">GigPulse</span>
+          <div>
+            <span className="font-display text-xl font-bold text-white">GigPulse</span>
+            <p className="text-xs text-slate-400">Market intelligence</p>
+          </div>
         </a>
 
-        <div className="hidden items-center gap-7 lg:flex">
-          {navItems.map(([label, href]) => (
-            <a key={label} href={href} className="nav-link">
+        <nav className="mt-8 grid gap-1">
+          {marketingNavItems.map(({ label, href, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              className="group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white"
+            >
+              <span className="grid h-9 w-9 place-items-center rounded-xl border border-white/10 bg-white/[0.04] text-slate-400 transition group-hover:border-cyan-300/30 group-hover:text-cyan-200">
+                <Icon className="h-4 w-4" />
+              </span>
               {label}
             </a>
           ))}
+        </nav>
+
+        <div className="mt-8 rounded-3xl border border-cyan-300/15 bg-cyan-300/[0.06] p-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-200">Workspace</p>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
+            Jump into the focused client or freelancer dashboard when you are signed in.
+          </p>
+          <div className="mt-4 grid gap-2">
+            <button className="btn-ghost w-full justify-start px-4" type="button" onClick={() => onNavigate?.("/client")}>
+              <Users className="h-4 w-4" />
+              Client Workspace
+            </button>
+            <button className="btn-ghost w-full justify-start px-4" type="button" onClick={() => onNavigate?.("/freelancer")}>
+              <UserRound className="h-4 w-4" />
+              Freelancer Workspace
+            </button>
+          </div>
         </div>
 
-          <div className="hidden items-center gap-3 lg:flex">
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
-            <input
-              className="h-10 w-64 rounded-full border border-white/10 bg-white/5 pl-9 pr-10 text-sm text-white outline-none transition focus:border-cyan-300/70 focus:bg-white/10"
-              placeholder="Search skills or projects"
-            />
-            <Filter className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-          </div>
-          <button
-            className="icon-button"
-            type="button"
-            onClick={() => setNotificationsOpen((current) => !current)}
-            aria-label="Open notifications"
-          >
-            <Bell className="h-4 w-4" />
-            <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-cyan-300" />
-          </button>
-          <button
-            className="icon-button"
-            type="button"
-            onClick={onToggleTheme}
-            aria-label="Toggle theme"
-          >
-            {isLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-          </button>
+        <div className="mt-auto grid gap-3 border-t border-white/10 pt-5">
           {user ? (
             <>
-              {user.role === "client" && (
-                <button
-                  onClick={() => onNavigate?.("/client")}
-                  className="btn-ghost"
-                >
-                  Client Workspace
-                </button>
-              )}
-              {user.role === "freelancer" && (
-                <button
-                  onClick={() => onNavigate?.("/freelancer")}
-                  className="btn-ghost"
-                >
-                  Freelancer Workspace
-                </button>
-              )}
-              {user.role === "client" ? (
-                <a href="#post" className="btn-primary">Post project</a>
-              ) : (
-                <a href="#dashboard" className="btn-primary">Dashboard</a>
-              )}
-              <button onClick={() => logout()} className="btn-ghost">Logout</button>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                <p className="text-xs text-slate-400">Signed in as</p>
+                <p className="mt-1 truncate text-sm font-semibold text-white">{user.full_name || user.username || user.email}</p>
+              </div>
+              <button type="button" onClick={() => logout()} className="btn-ghost w-full">
+                Logout
+              </button>
             </>
           ) : (
-            <>
-              <button
-                onClick={() => onNavigate?.("/client")}
-                className="btn-ghost"
-              >
-                Client Workspace
+            <div className="grid grid-cols-2 gap-2">
+              <button type="button" onClick={onLoginClick} className="btn-ghost px-4">
+                Login
               </button>
-              <button
-                onClick={() => onNavigate?.("/freelancer")}
-                className="btn-ghost"
-              >
-                Freelancer Workspace
+              <button type="button" onClick={onSignUpClick} className="btn-primary px-4">
+                Sign Up
               </button>
-              <button onClick={onLoginClick} className="btn-ghost">Login</button>
-              <button onClick={onSignUpClick} className="btn-primary">Sign Up</button>
-            </>
+            </div>
           )}
         </div>
+      </aside>
 
-        <button
-          type="button"
-          className="icon-button lg:hidden"
-          onClick={() => setOpen((current) => !current)}
-          aria-label="Open mobile menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </nav>
+      <header className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-slate-950/[0.82] backdrop-blur-2xl lg:left-72">
+        <div className="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+          <a href="#home" className="flex items-center gap-3 lg:hidden">
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-white/10 shadow-glow">
+              <img src={gigpulseLogo} alt="GigPulse" className="h-8 w-8" />
+            </span>
+            <span className="font-display text-lg font-bold text-white">GigPulse</span>
+          </a>
 
-      {notificationsOpen && (
-        <motion.div
-          className="absolute right-6 top-16 hidden w-80 rounded-2xl border border-white/10 bg-slate-950/95 p-4 shadow-2xl shadow-blue-950/40 backdrop-blur-2xl lg:block"
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          {["React jobs spiked 22% today", "New client reply from MeterStack", "AI agents added to your watchlist"].map(
-            (item) => (
+          <div className="hidden min-w-0 lg:block">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-cyan-300">GigPulse marketplace</p>
+            <p className="text-sm text-slate-400">Clean demand signals for smarter freelance decisions</p>
+          </div>
+
+          <form className="relative hidden w-full max-w-lg lg:block" onSubmit={handleSearchSubmit}>
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+            <input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-11 w-full rounded-full border border-white/10 bg-white/5 pl-11 pr-12 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/70 focus:bg-white/10"
+              placeholder="Search skills, projects, or freelancers"
+            />
+            <button
+              className="absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-full text-slate-400 transition hover:bg-white/10 hover:text-white"
+              type="submit"
+              aria-label="Search"
+            >
+              <Filter className="h-4 w-4" />
+            </button>
+            {searchResults.length > 0 && (
+              <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-2xl border border-white/10 bg-slate-950/95 shadow-2xl shadow-blue-950/40 backdrop-blur-xl">
+                {searchResults.map((result) => (
+                  <button
+                    key={`${result.type}-${result.label}`}
+                    type="button"
+                    className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm text-slate-200 transition hover:bg-white/10"
+                    onClick={() => {
+                      setSearchTerm(result.label);
+                      window.location.hash = result.href;
+                      scrollToSection(result.href);
+                    }}
+                  >
+                    <span className="truncate">{result.label}</span>
+                    <span className="shrink-0 text-xs uppercase tracking-[0.18em] text-cyan-300">{result.type}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </form>
+
+          <div className="ml-auto flex items-center gap-2">
+            <button
+              className="icon-button"
+              type="button"
+              onClick={() => setNotificationsOpen((current) => !current)}
+              aria-label="Open notifications"
+            >
+              <Bell className="h-4 w-4" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-cyan-300" />
+            </button>
+            <button
+              className="icon-button"
+              type="button"
+              onClick={onToggleTheme}
+              aria-label="Toggle theme"
+            >
+              {isLight ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+            </button>
+            {!user && (
+              <div className="hidden items-center gap-2 sm:flex">
+                <button type="button" onClick={onLoginClick} className="btn-ghost px-4">
+                  Login
+                </button>
+                <button type="button" onClick={onSignUpClick} className="btn-primary px-4">
+                  Sign Up
+                </button>
+              </div>
+            )}
+            <button
+              type="button"
+              className="icon-button lg:hidden"
+              onClick={() => setOpen((current) => !current)}
+              aria-label="Open mobile menu"
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        {notificationsOpen && (
+          <motion.div
+            className="absolute right-4 top-full mt-2 w-[min(22rem,calc(100vw-2rem))] rounded-2xl border border-white/10 bg-slate-950/95 p-4 shadow-2xl shadow-blue-950/40 backdrop-blur-2xl"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            {notifications.map((item) => (
               <div key={item} className="mb-3 flex items-start gap-3 last:mb-0">
                 <span className="mt-1 h-2 w-2 rounded-full bg-cyan-300" />
                 <p className="text-sm text-slate-300">{item}</p>
               </div>
-            )
-          )}
-        </motion.div>
-      )}
-
-      {open && (
-        <motion.div
-          className="border-t border-white/10 bg-slate-950/95 px-4 py-4 backdrop-blur-2xl lg:hidden"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-        >
-          <div className="grid gap-2">
-            {navItems.map(([label, href]) => (
-              <a
-                key={label}
-                href={href}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10"
-              >
-                {label}
-              </a>
             ))}
-            {onNavigate && (
+          </motion.div>
+        )}
+
+        {open && (
+          <motion.div
+            className="border-t border-white/10 bg-slate-950/[0.96] px-4 py-4 backdrop-blur-2xl lg:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+          >
+            <div className="grid gap-2">
+              {marketingNavItems.map(({ label, href, icon: Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10"
+                >
+                  <Icon className="h-4 w-4 text-cyan-200" />
+                  {label}
+                </a>
+              ))}
               <button
                 onClick={() => {
                   setOpen(false);
-                  onNavigate("/freelancer");
-                }}
-                className="rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-200 transition hover:bg-white/10"
-                type="button"
-              >
-                Freelancer Workspace
-              </button>
-            )}
-            {onNavigate && (
-              <button
-                onClick={() => {
-                  setOpen(false);
-                  onNavigate("/client");
+                  onNavigate?.("/client");
                 }}
                 className="rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-200 transition hover:bg-white/10"
                 type="button"
               >
                 Client Workspace
               </button>
-            )}
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <button className="btn-ghost" type="button" onClick={onToggleTheme}>
-              {isLight ? "Dark" : "Light"}
-            </button>
-            <button className="btn-primary text-center" onClick={onSignUpClick}>
-              Sign Up
-            </button>
-          </div>
-        </motion.div>
-      )}
-    </header>
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  onNavigate?.("/freelancer");
+                }}
+                className="rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-200 transition hover:bg-white/10"
+                type="button"
+              >
+                Freelancer Workspace
+              </button>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              <button className="btn-ghost" type="button" onClick={onToggleTheme}>
+                {isLight ? "Dark" : "Light"}
+              </button>
+              {user ? (
+                <button className="btn-ghost justify-center" type="button" onClick={() => logout()}>
+                  Logout
+                </button>
+              ) : (
+                <>
+                  <button className="btn-ghost justify-center" type="button" onClick={onLoginClick}>
+                    Login
+                  </button>
+                  <button className="btn-primary col-span-2 justify-center" type="button" onClick={onSignUpClick}>
+                    Sign Up
+                  </button>
+                </>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </header>
+    </>
   );
 }
 
@@ -461,7 +723,7 @@ function Hero() {
             skills, and grow careers with real-time market intelligence.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <button onClick={() => window.dispatchEvent(new CustomEvent('openAuth', { detail: { type: 'register' } }))} className="btn-primary h-12 justify-center px-6 text-base">
+            <button type="button" onClick={() => window.dispatchEvent(new CustomEvent('openAuth', { detail: { type: 'register' } }))} className="btn-primary h-12 justify-center px-6 text-base">
               Get Started
               <ArrowUpRight className="h-4 w-4" />
             </button>
@@ -471,13 +733,13 @@ function Hero() {
             </a>
           </div>
           <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-300">
-            Connect the backend to surface live skills, projects, and market signals.
+            Browse live-style market signals, save opportunities, and move into the role-specific workspace after sign-in.
           </div>
         </motion.div>
 
-        <div className="relative min-h-[360px] lg:min-h-[560px]">
+        <div className="grid gap-5 self-center">
           <motion.div
-            className="glass-panel absolute right-0 top-4 w-72 p-4 sm:w-80"
+            className="glass-panel p-5"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.75, delay: 0.25 }}
@@ -487,19 +749,26 @@ function Hero() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Live data
                 </p>
-                <p className="mt-1 text-2xl font-bold text-white">Connect account</p>
+                <p className="mt-1 text-2xl font-bold text-white">React demand</p>
               </div>
               <span className="rounded-full bg-violet-400/15 px-3 py-1 text-sm font-semibold text-violet-200">
-                Empty
+                +22%
               </span>
             </div>
-            <div className="mt-4 rounded-2xl border border-dashed border-white/15 bg-white/5 p-6 text-center text-sm text-slate-400">
-              Sample market charts are removed until you connect real project data.
+            <div className="mt-4">
+              <LineSpark points={skills[0].points} color="#06B6D4" className="h-28 w-full" />
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs text-slate-400">
+              {["Remote", "SaaS", "High rate"].map((item) => (
+                <span key={item} className="rounded-full border border-white/10 bg-white/5 px-2 py-1">
+                  {item}
+                </span>
+              ))}
             </div>
           </motion.div>
 
           <motion.div
-            className="glass-panel absolute bottom-16 left-0 w-72 p-4 sm:w-80"
+            className="glass-panel p-5"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.75, delay: 0.38 }}
@@ -509,21 +778,24 @@ function Hero() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Workspaces
                 </p>
-                <p className="mt-1 text-xl font-bold text-white">Connected workspaces</p>
+                <p className="mt-1 text-xl font-bold text-white">Top project fit</p>
               </div>
               <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-slate-300">
-                Live data only
+                94%
               </span>
             </div>
             <div className="space-y-3">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300">
-                Role-specific dashboards load after sign-in and backend sync.
-              </div>
+              {projects.slice(0, 2).map((project) => (
+                <div key={project.title} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300">
+                  <p className="font-semibold text-white">{project.title}</p>
+                  <p className="mt-1 text-xs text-slate-400">{project.budget} · {project.duration}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
 
           <motion.div
-            className="glass-panel absolute bottom-2 right-8 hidden w-56 p-4 sm:block"
+            className="glass-panel p-5"
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, delay: 0.5 }}
@@ -534,7 +806,7 @@ function Hero() {
               </div>
               <div>
                 <p className="text-sm text-slate-400">Next step</p>
-                <p className="font-semibold text-white">Connect your account</p>
+                <p className="font-semibold text-white">Create profile</p>
               </div>
             </div>
           </motion.div>
@@ -568,8 +840,12 @@ function Hero() {
       </div>
 
       <div className="border-y border-white/10 bg-white/[0.03] py-3 backdrop-blur-xl">
-        <div className="mx-auto max-w-7xl px-4 text-center text-sm text-slate-400 sm:px-6 lg:px-8">
-          Live trend ticker removed until real market data is connected.
+        <div className="ticker-mask mx-auto flex max-w-7xl gap-3 overflow-hidden px-4 sm:px-6 lg:px-8">
+          {[...tickerItems, ...tickerItems].map((item, index) => (
+            <span key={`${item}-${index}`} className="ticker-chip shrink-0">
+              {item}
+            </span>
+          ))}
         </div>
       </div>
     </section>
@@ -577,6 +853,31 @@ function Hero() {
 }
 
 function TrendingSkills() {
+  const [query, setQuery] = useState("");
+  const [activeFilters, setActiveFilters] = useState([]);
+
+  const filteredSkills = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    return skills.filter((skill) => {
+      const matchesQuery =
+        !normalized ||
+        skill.name.toLowerCase().includes(normalized) ||
+        skill.tags.some((tag) => tag.toLowerCase().includes(normalized));
+      const matchesFilters =
+        activeFilters.length === 0 ||
+        activeFilters.every((filter) => skill.filters.includes(filter));
+      return matchesQuery && matchesFilters;
+    });
+  }, [activeFilters, query]);
+
+  function toggleFilter(filter) {
+    setActiveFilters((current) =>
+      current.includes(filter)
+        ? current.filter((item) => item !== filter)
+        : [...current, filter]
+    );
+  }
+
   return (
     <section id="trends" className="section-shell">
       <SectionHeading
@@ -589,31 +890,115 @@ function TrendingSkills() {
         <div className="relative flex-1">
           <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             className="h-12 w-full rounded-xl border border-white/10 bg-slate-950/40 pl-11 pr-4 text-sm text-white outline-none transition focus:border-cyan-300/70"
             placeholder="Search React, AI/ML, AWS, Django..."
           />
         </div>
         <div className="flex flex-wrap gap-2">
           {["Remote", "High rate", "Fast growth", "Low competition"].map((item) => (
-            <button key={item} className="category-pill" type="button">
+            <button
+              key={item}
+              className={`category-pill ${activeFilters.includes(item) ? "border-cyan-300/50 bg-cyan-300/15 text-white" : ""}`}
+              type="button"
+              onClick={() => toggleFilter(item)}
+            >
               {item}
             </button>
           ))}
-          <button className="btn-ghost h-12" type="button">
+          <button className="btn-ghost h-12" type="button" onClick={() => setActiveFilters([])}>
             <SlidersHorizontal className="h-4 w-4" />
-            Filters
+            Reset
           </button>
         </div>
       </div>
 
-      <div className="glass-card p-8 text-center text-slate-300">
-        Skill trend cards were removed until real marketplace data is connected.
+      <div className="grid gap-5 lg:grid-cols-3">
+        {filteredSkills.map((skill, index) => (
+          <motion.article
+            key={skill.name}
+            className="glass-card min-w-0 p-5"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.05 }}
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-xl font-bold text-white">{skill.name}</h3>
+                <p className="mt-1 text-sm text-slate-400">{skill.tags.join(" · ")}</p>
+              </div>
+              <span className="rounded-full bg-cyan-300/10 px-3 py-1 text-sm font-semibold text-cyan-100">
+                {skill.demand}% demand
+              </span>
+            </div>
+            <LineSpark points={skill.points} color="#06B6D4" className="mt-5 h-28 w-full" />
+            <div className="mt-5 grid grid-cols-3 gap-3 text-sm">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-slate-400">Growth</p>
+                <p className="mt-1 font-semibold text-white">+{skill.growth}%</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-slate-400">Rate</p>
+                <p className="mt-1 font-semibold text-white">₹{skill.rate.toLocaleString()}/hr</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-slate-400">Comp.</p>
+                <p className="mt-1 font-semibold text-white">{skill.competition}</p>
+              </div>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {skill.filters.map((filter) => (
+                <span key={filter} className="skill-badge">{filter}</span>
+              ))}
+            </div>
+          </motion.article>
+        ))}
       </div>
+      {filteredSkills.length === 0 && (
+        <div className="glass-card p-8 text-center text-slate-300">
+          No skill signals match that search. Clear filters or try another keyword.
+        </div>
+      )}
     </section>
   );
 }
 
 function Projects() {
+  const [query, setQuery] = useState("");
+  const [savedProjects, setSavedProjects] = useState([]);
+  const [message, setMessage] = useState("");
+
+  const filteredProjects = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) return projects;
+    return projects.filter(
+      (project) =>
+        project.title.toLowerCase().includes(normalized) ||
+        project.client.toLowerCase().includes(normalized) ||
+        project.tags.some((tag) => tag.toLowerCase().includes(normalized))
+    );
+  }, [query]);
+
+  function toggleSaved(projectTitle) {
+    setSavedProjects((current) =>
+      current.includes(projectTitle)
+        ? current.filter((item) => item !== projectTitle)
+        : [...current, projectTitle]
+    );
+    setMessage(
+      savedProjects.includes(projectTitle)
+        ? "Project removed from saved jobs."
+        : "Project saved to your dashboard."
+    );
+  }
+
+  function viewProject(projectTitle) {
+    setMessage(`Opening the brief for "${projectTitle}". Sign in to submit a proposal.`);
+    window.dispatchEvent(new CustomEvent("openAuth", { detail: { type: "login" } }));
+  }
+
   return (
     <section id="projects" className="section-shell">
       <SectionHeading
@@ -621,14 +1006,91 @@ function Projects() {
         title="High-signal freelance work, ranked by fit and demand."
         copy="Every project card blends client quality, required skills, competition, budget, and timing so freelancers can act faster."
       />
-      <div className="glass-card p-8 text-center text-slate-300">
-        Client project samples were removed until live listings are available.
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full sm:max-w-md">
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="h-12 w-full rounded-xl border border-white/10 bg-white/5 pl-11 pr-4 text-sm text-white outline-none transition focus:border-cyan-300/70"
+            placeholder="Filter by title, client, or skill"
+          />
+        </div>
+        <ActionBanner message={message} />
+      </div>
+      <div className="grid gap-5 lg:grid-cols-3">
+        {filteredProjects.map((project, index) => {
+          const isSaved = savedProjects.includes(project.title);
+          return (
+            <motion.article
+              key={project.title}
+              className="glass-card flex min-w-0 flex-col p-5"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.22em] text-cyan-300">{project.client}</p>
+                  <h3 className="mt-2 text-xl font-bold text-white">{project.title}</h3>
+                </div>
+                <span className="rounded-full bg-emerald-300/10 px-3 py-1 text-sm font-semibold text-emerald-100">
+                  {project.match}% fit
+                </span>
+              </div>
+              <div className="mt-5 grid gap-3 text-sm text-slate-300">
+                <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                  <span>Budget</span>
+                  <span className="font-semibold text-white">{project.budget}</span>
+                </div>
+                <div className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3">
+                  <span>Timeline</span>
+                  <span className="font-semibold text-white">{project.duration}</span>
+                </div>
+              </div>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span key={tag} className="skill-badge">{tag}</span>
+                ))}
+              </div>
+              <p className="mt-4 text-sm text-cyan-100">{project.urgency}</p>
+              <div className="mt-auto flex gap-3 pt-6">
+                <button className="btn-primary flex-1 justify-center" type="button" onClick={() => viewProject(project.title)}>
+                  View brief
+                </button>
+                <button
+                  className="icon-button shrink-0"
+                  type="button"
+                  onClick={() => toggleSaved(project.title)}
+                  aria-label={isSaved ? "Unsave project" : "Save project"}
+                >
+                  <Bookmark className={`h-4 w-4 ${isSaved ? "fill-cyan-300 text-cyan-300" : ""}`} />
+                </button>
+              </div>
+            </motion.article>
+          );
+        })}
       </div>
     </section>
   );
 }
 
 function FreelancerProfiles() {
+  const [query, setQuery] = useState("");
+  const [message, setMessage] = useState("");
+
+  const filteredFreelancers = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) return freelancers;
+    return freelancers.filter(
+      (person) =>
+        person.name.toLowerCase().includes(normalized) ||
+        person.title.toLowerCase().includes(normalized) ||
+        person.skills.some((skill) => skill.toLowerCase().includes(normalized))
+    );
+  }, [query]);
+
   return (
     <section id="freelancers" className="section-shell">
       <SectionHeading
@@ -636,8 +1098,67 @@ function FreelancerProfiles() {
         title="Profiles that convert demand into credibility."
         copy="Verification, portfolio previews, earnings proof, and skill tags help clients understand fit in seconds."
       />
-      <div className="glass-card p-8 text-center text-slate-300">
-        Freelancer profile samples were removed until real accounts are available.
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full sm:max-w-md">
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="h-12 w-full rounded-xl border border-white/10 bg-white/5 pl-11 pr-4 text-sm text-white outline-none transition focus:border-cyan-300/70"
+            placeholder="Search talent by skill or role"
+          />
+        </div>
+        <ActionBanner message={message} />
+      </div>
+      <div className="grid gap-5 lg:grid-cols-3">
+        {filteredFreelancers.map((person, index) => (
+          <motion.article
+            key={person.name}
+            className="glass-card flex min-w-0 flex-col p-5"
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.05 }}
+          >
+            <div className="flex items-start gap-4">
+              <div className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-cyan-400 text-lg font-bold text-white">
+                {person.name.split(" ").map((part) => part[0]).join("")}
+              </div>
+              <div className="min-w-0">
+                <h3 className="truncate text-xl font-bold text-white">{person.name}</h3>
+                <p className="mt-1 text-sm text-slate-400">{person.title}</p>
+              </div>
+            </div>
+            <div className="mt-5 grid grid-cols-3 gap-3 text-sm">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-slate-400">Rate</p>
+                <p className="mt-1 font-semibold text-white">{person.rate}</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-slate-400">Rating</p>
+                <p className="mt-1 font-semibold text-white">{person.rating}</p>
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-slate-400">Match</p>
+                <p className="mt-1 font-semibold text-white">{person.score}</p>
+              </div>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {person.skills.map((skill) => (
+                <span key={skill} className="skill-badge">{skill}</span>
+              ))}
+            </div>
+            <p className="mt-4 text-sm text-cyan-100">{person.availability}</p>
+            <button
+              className="btn-ghost mt-6 justify-center"
+              type="button"
+              onClick={() => setMessage(`${person.name}'s profile is ready to review in the client workspace.`)}
+            >
+              Open profile
+              <ArrowUpRight className="h-4 w-4" />
+            </button>
+          </motion.article>
+        ))}
       </div>
     </section>
   );
@@ -676,7 +1197,18 @@ function AIRecommendation() {
               </div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-slate-300">
-              AI recommendations will appear here after live account and marketplace data are connected.
+              <div className="space-y-3">
+                {[
+                  "Add AI workflow examples to your portfolio this week.",
+                  "Prioritize React + analytics briefs above low-budget landing pages.",
+                  "Raise cloud reliability proposals by 12% where AWS is required."
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm">
+                    <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -686,6 +1218,21 @@ function AIRecommendation() {
 }
 
 function ChatPreview() {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [reply, setReply] = useState("");
+  const [messages, setMessages] = useState([
+    { side: "left", text: "Can you share a short milestone plan for the analytics dashboard?" },
+    { side: "right", text: "Yes. I will split it into discovery, prototype, build, and QA checkpoints." },
+    { side: "left", text: "Perfect. Please include weekly review windows." }
+  ]);
+
+  function sendReply() {
+    const trimmed = reply.trim();
+    if (!trimmed) return;
+    setMessages((current) => [...current, { side: "right", text: trimmed }]);
+    setReply("");
+  }
+
   return (
     <section className="section-shell">
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
@@ -711,20 +1258,39 @@ function ChatPreview() {
                 <p className="text-sm text-slate-400">Online, reviewing proposal</p>
               </div>
             </div>
-            <button className="icon-button" type="button" aria-label="Open chat settings">
+            <button
+              className="icon-button"
+              type="button"
+              aria-label="Open chat settings"
+              onClick={() => setSettingsOpen((current) => !current)}
+            >
               <ChevronDown className="h-4 w-4" />
             </button>
           </div>
+          {settingsOpen && (
+            <div className="border-b border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-slate-300">
+              Chat settings: notifications on, project context pinned, secure file sharing enabled.
+            </div>
+          )}
           <div className="space-y-4 p-5 text-slate-300">
-            Live chat previews were removed until authenticated conversations are connected.
+            {messages.map((message, index) => (
+              <div key={`${message.text}-${index}`} className={`message-bubble ${message.side}`}>
+                {message.text}
+              </div>
+            ))}
           </div>
           <div className="border-t border-white/10 p-4">
             <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3">
               <input
+                value={reply}
+                onChange={(e) => setReply(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") sendReply();
+                }}
                 className="min-w-0 flex-1 bg-transparent text-sm text-white outline-none"
                 placeholder="Write a reply"
               />
-              <button className="grid h-9 w-9 place-items-center rounded-xl bg-cyan-400 text-slate-950" type="button">
+              <button className="grid h-9 w-9 place-items-center rounded-xl bg-cyan-400 text-slate-950" type="button" onClick={sendReply}>
                 <Send className="h-4 w-4" />
               </button>
             </div>
@@ -736,6 +1302,7 @@ function ChatPreview() {
 }
 
 function Pricing() {
+  const [selectedPlan, setSelectedPlan] = useState("");
   const tiers = [
     {
       name: "Free",
@@ -797,8 +1364,15 @@ function Pricing() {
                 </div>
               ))}
             </div>
-            <button className={tier.popular ? "btn-primary mt-8 w-full justify-center" : "btn-ghost mt-8 w-full justify-center"} type="button">
-              Choose plan
+            <button
+              className={tier.popular ? "btn-primary mt-8 w-full justify-center" : "btn-ghost mt-8 w-full justify-center"}
+              type="button"
+              onClick={() => {
+                setSelectedPlan(tier.name);
+                window.dispatchEvent(new CustomEvent("openAuth", { detail: { type: "register" } }));
+              }}
+            >
+              {selectedPlan === tier.name ? "Selected" : "Choose plan"}
             </button>
           </motion.article>
         ))}
@@ -812,31 +1386,95 @@ function Testimonials() {
     <section className="section-shell">
       <SectionHeading
         eyebrow="Customer stories"
-        title="Customer stories appear after live accounts are connected."
+        title="Freelancers and clients move faster with clearer signals."
       />
-      <div className="glass-card mx-auto max-w-4xl p-8 text-center text-slate-300 sm:p-10">
-        Testimonials were removed because the site should not ship with fake client or freelancer quotes.
+      <div className="grid gap-5 lg:grid-cols-2">
+        {testimonials.map((story) => (
+          <article key={story.name} className="glass-card p-6">
+            <p className="text-lg leading-8 text-slate-200">"{story.quote}"</p>
+            <div className="mt-6 flex items-center gap-3">
+              <div className="grid h-11 w-11 place-items-center rounded-2xl bg-cyan-300/10 font-bold text-cyan-100">
+                {story.name.split(" ").map((part) => part[0]).join("")}
+              </div>
+              <div>
+                <p className="font-semibold text-white">{story.name}</p>
+                <p className="text-sm text-slate-400">{story.role}</p>
+              </div>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
 
 function Dashboard() {
+  const [activeMetric, setActiveMetric] = useState(dashboardMetrics[0].label);
+
   return (
     <section id="dashboard" className="section-shell">
       <SectionHeading
         eyebrow="Freelancer dashboard"
-        title="Your dashboard appears after a real account is connected."
-        copy="The demo metrics and sample sidebar content have been removed until the backend returns real user data."
+        title="Your dashboard turns signals into next actions."
+        copy="Preview the kind of opportunity, proposal, and rate insights available after sign-in."
       />
-      <div className="glass-card p-8 text-center text-slate-300">
-        Dashboard cards, metrics, and sample tasks were removed until real user data is available.
+      <div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+        <div className="glass-card p-4">
+          <div className="grid gap-2">
+            {sidebarItems.slice(0, 6).map(({ label, icon: Icon }) => (
+              <button
+                key={label}
+                type="button"
+                className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm transition ${
+                  activeMetric === label ? "bg-cyan-300/10 text-white" : "text-slate-300 hover:bg-white/10"
+                }`}
+                onClick={() => setActiveMetric(label)}
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {dashboardMetrics.map((metric) => (
+            <button
+              key={metric.label}
+              type="button"
+              className="glass-card p-5 text-left transition hover:-translate-y-1 hover:border-cyan-300/40"
+              onClick={() => setActiveMetric(metric.label)}
+            >
+              <p className="text-sm text-slate-400">{metric.label}</p>
+              <p className="mt-3 text-2xl font-bold text-white">{metric.value}</p>
+              <p className="mt-2 text-xs leading-5 text-slate-400">{metric.detail}</p>
+            </button>
+          ))}
+          <div className="glass-card sm:col-span-3 p-5">
+            <p className="text-sm font-semibold text-white">Selected workspace area</p>
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              {activeMetric} is active. Sign in to sync this preview with your real saved jobs, profile data, and proposal pipeline.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
 function Footer() {
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  function handleSubscribe(e) {
+    e.preventDefault();
+    if (!email.trim() || !email.includes("@")) {
+      setMessage("Enter a valid email to subscribe.");
+      return;
+    }
+    setMessage("Subscribed. Market updates will arrive in your inbox.");
+    setEmail("");
+  }
+
   return (
     <footer className="border-t border-white/10 bg-slate-950 px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_1fr_1fr_1fr]">
@@ -852,10 +1490,15 @@ function Footer() {
             build better portfolios, and win stronger projects.
           </p>
           <div className="mt-5 flex gap-3">
-            {[Twitter, Linkedin, Github, Globe].map((Icon, index) => (
-              <button key={index} className="icon-button" type="button" aria-label="Social link">
+            {[
+              { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+              { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+              { icon: Github, href: "https://github.com", label: "GitHub" },
+              { icon: Globe, href: "#home", label: "Website" }
+            ].map(({ icon: Icon, href, label }) => (
+              <a key={label} className="icon-button" href={href} aria-label={label}>
                 <Icon className="h-4 w-4" />
-              </button>
+              </a>
             ))}
           </div>
         </div>
@@ -868,7 +1511,7 @@ function Footer() {
             <h4 className="font-bold text-white">{title}</h4>
             <div className="mt-4 grid gap-3">
               {links.map((link) => (
-                <a key={link} href="#home" className="text-sm text-slate-400 transition hover:text-white">
+                <a key={link} href={link === "Pricing" ? "#pricing" : link === "Projects" ? "#projects" : link === "Market Trends" ? "#trends" : "#home"} className="text-sm text-slate-400 transition hover:text-white">
                   {link}
                 </a>
               ))}
@@ -878,12 +1521,18 @@ function Footer() {
       </div>
       <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-4 border-t border-white/10 pt-6 md:flex-row md:items-center md:justify-between">
         <p className="text-sm text-slate-500">© 2026 GigPulse. All rights reserved.</p>
-        <form className="flex max-w-md gap-2">
-          <input
-            className="h-11 min-w-0 flex-1 rounded-xl border border-white/10 bg-white/5 px-4 text-sm text-white outline-none"
-            placeholder="Email for market updates"
-          />
-          <button className="btn-primary h-11" type="button">
+        <form className="flex w-full max-w-md flex-col gap-2 sm:flex-row" onSubmit={handleSubscribe}>
+          <div className="min-w-0 flex-1">
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="h-11 w-full rounded-xl border border-white/10 bg-white/5 px-4 text-sm text-white outline-none"
+              placeholder="Email for market updates"
+              type="email"
+            />
+            {message && <p className="mt-2 text-xs text-cyan-100">{message}</p>}
+          </div>
+          <button className="btn-primary h-11 justify-center" type="submit">
             Subscribe
           </button>
         </form>
@@ -931,6 +1580,85 @@ function ClientApp({ onNavigate }) {
     { title: "AI match update: 4 new top-fit freelancers", time: "Yesterday" }
   ];
 
+  const [notice, setNotice] = useState("");
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [projectDraft, setProjectDraft] = useState({
+    title: "",
+    scope: "",
+    budget: "",
+    timeline: ""
+  });
+  const [projectSkills, setProjectSkills] = useState(["Product design", "React", "Brand systems", "Analytics"]);
+  const [publishedProjects, setPublishedProjects] = useState([]);
+  const [clientMessages, setClientMessages] = useState([
+    { side: "left", text: "Hi Sivon, milestone 1 design files are ready for review." },
+    { side: "right", text: "Thanks! I will review and share feedback by EOD." }
+  ]);
+  const [clientMessage, setClientMessage] = useState("");
+  const [clientMilestones, setClientMilestones] = useState(milestones);
+  const [releasedTotal, setReleasedTotal] = useState(0);
+
+  function notify(message) {
+    setNotice(message);
+  }
+
+  function updateProjectDraft(field, value) {
+    setProjectDraft((current) => ({ ...current, [field]: value }));
+  }
+
+  function addProjectSkill() {
+    const options = ["AI workflows", "Django", "AWS", "Data pipelines"];
+    const nextSkill = options.find((skill) => !projectSkills.includes(skill));
+    if (!nextSkill) {
+      notify("All suggested skills are already added.");
+      return;
+    }
+    setProjectSkills((current) => [...current, nextSkill]);
+    notify(`${nextSkill} added to required skills.`);
+  }
+
+  function publishProject() {
+    if (!projectDraft.title.trim() || !projectDraft.scope.trim()) {
+      notify("Add a project title and scope summary before publishing.");
+      return;
+    }
+    setPublishedProjects((current) => [
+      {
+        ...projectDraft,
+        skills: projectSkills,
+        id: Date.now()
+      },
+      ...current
+    ]);
+    setProjectDraft({ title: "", scope: "", budget: "", timeline: "" });
+    notify("Project published to your proposal pipeline.");
+  }
+
+  function sendClientMessage() {
+    const trimmed = clientMessage.trim();
+    if (!trimmed) return;
+    setClientMessages((current) => [...current, { side: "right", text: trimmed }]);
+    setClientMessage("");
+    notify("Message sent to the project thread.");
+  }
+
+  function releaseMilestone() {
+    const nextMilestone = clientMilestones.find((milestone) => milestone.status !== "Released");
+    if (!nextMilestone) {
+      notify("All milestones are already released.");
+      return;
+    }
+    setClientMilestones((current) =>
+      current.map((milestone) =>
+        milestone.title === nextMilestone.title
+          ? { ...milestone, status: "Released" }
+          : milestone
+      )
+    );
+    setReleasedTotal((current) => current + 1);
+    notify(`${nextMilestone.title} released successfully.`);
+  }
+
   return (
     <div className="client-shell">
       <header className="client-topbar">
@@ -952,15 +1680,37 @@ function ClientApp({ onNavigate }) {
                 placeholder="Search freelancers or projects"
               />
             </div>
-            <button className="client-btn-ghost" type="button">Invite team</button>
-            <button className="client-btn-primary" type="button">Post project</button>
-            <button className="icon-button" type="button" aria-label="Notifications">
+            <button className="client-btn-ghost" type="button" onClick={() => notify("Team invite link created and ready to share.")}>Invite team</button>
+            <button className="client-btn-primary" type="button" onClick={() => scrollToSection("#client-post")}>Post project</button>
+            <button
+              className="icon-button"
+              type="button"
+              aria-label="Notifications"
+              onClick={() => setNotificationsOpen((current) => !current)}
+            >
               <Bell className="h-4 w-4" />
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-cyan-400" />
             </button>
             <button className="client-btn-ghost" type="button" onClick={() => onNavigate("/")}>Marketing site</button>
           </div>
         </div>
+        {notificationsOpen && (
+          <div className="mx-auto max-w-7xl px-6 pb-4">
+            <div className="ml-auto grid max-w-md gap-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-xl">
+              {notifications.map((note) => (
+                <button
+                  key={note.title}
+                  type="button"
+                  className="flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-left text-sm text-slate-600 transition hover:bg-slate-50"
+                  onClick={() => notify(note.title)}
+                >
+                  <span>{note.title}</span>
+                  <span className="shrink-0 text-xs text-slate-400">{note.time}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </header>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-16 pt-8 lg:flex-row">
@@ -992,14 +1742,19 @@ function ClientApp({ onNavigate }) {
                 <p className="text-xs text-slate-400">4 new matches today</p>
               </div>
             </div>
-            <button className="mt-4 w-full rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs font-semibold text-white">
+            <button
+              className="mt-4 w-full rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/15"
+              type="button"
+              onClick={() => scrollToSection("#client-compare")}
+            >
               Review matches
             </button>
           </div>
           <div className="mt-6 text-xs text-slate-400">Settings · Security · Billing</div>
         </aside>
 
-        <main className="flex-1 space-y-12">
+        <main className="min-w-0 flex-1 space-y-12">
+          <ActionBanner message={notice} tone="light" />
           <section id="client-hero" className="client-card">
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
@@ -1011,11 +1766,11 @@ function ClientApp({ onNavigate }) {
                   Organize proposals, manage contracts, and track delivery milestones in one secure workspace.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <button className="client-btn-primary" type="button">
+                  <button className="client-btn-primary" type="button" onClick={() => scrollToSection("#client-post")}>
                     Post a premium project
                     <ArrowUpRight className="h-4 w-4" />
                   </button>
-                  <button className="client-btn-ghost" type="button">View hiring insights</button>
+                  <button className="client-btn-ghost" type="button" onClick={() => scrollToSection("#client-analytics")}>View hiring insights</button>
                 </div>
               </div>
               <div className="grid gap-4">
@@ -1121,7 +1876,7 @@ function ClientApp({ onNavigate }) {
             <div className="mt-6 client-card">
               <div className="flex items-center justify-between">
                 <p className="text-sm font-semibold text-slate-900">Latest proposals</p>
-                <button className="client-btn-ghost" type="button">View all</button>
+                <button className="client-btn-ghost" type="button" onClick={() => notify("Showing all proposals in the current pipeline.")}>View all</button>
               </div>
               <div className="mt-4 grid gap-3">
                 {proposals.map((proposal) => (
@@ -1133,7 +1888,7 @@ function ClientApp({ onNavigate }) {
                     <div className="text-xs text-slate-500">{proposal.rate}</div>
                     <span className="client-badge"><BadgeCheck className="h-3 w-3" /> {proposal.score} fit</span>
                     <span className="client-pill">{proposal.status}</span>
-                    <button className="client-btn-ghost" type="button">Review</button>
+                    <button className="client-btn-ghost" type="button" onClick={() => notify(`${proposal.name}'s proposal opened for review.`)}>Review</button>
                   </div>
                 ))}
               </div>
@@ -1150,29 +1905,49 @@ function ClientApp({ onNavigate }) {
               <div className="grid gap-4">
                 <div className="grid gap-2">
                   <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Project title</label>
-                  <input className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700" placeholder="e.g., SaaS onboarding redesign" />
+                  <input
+                    value={projectDraft.title}
+                    onChange={(e) => updateProjectDraft("title", e.target.value)}
+                    className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus:border-blue-400"
+                    placeholder="e.g., SaaS onboarding redesign"
+                  />
                 </div>
                 <div className="grid gap-2">
                   <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Scope summary</label>
-                  <textarea className="min-h-[120px] rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700" placeholder="Key goals, deliverables, and success criteria." />
+                  <textarea
+                    value={projectDraft.scope}
+                    onChange={(e) => updateProjectDraft("scope", e.target.value)}
+                    className="min-h-[120px] rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-blue-400"
+                    placeholder="Key goals, deliverables, and success criteria."
+                  />
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="grid gap-2">
                     <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Budget range</label>
-                    <input className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700" placeholder="₹3L - ₹6L" />
+                    <input
+                      value={projectDraft.budget}
+                      onChange={(e) => updateProjectDraft("budget", e.target.value)}
+                      className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus:border-blue-400"
+                      placeholder="₹3L - ₹6L"
+                    />
                   </div>
                   <div className="grid gap-2">
                     <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Timeline</label>
-                    <input className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700" placeholder="6 weeks" />
+                    <input
+                      value={projectDraft.timeline}
+                      onChange={(e) => updateProjectDraft("timeline", e.target.value)}
+                      className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700 outline-none transition focus:border-blue-400"
+                      placeholder="6 weeks"
+                    />
                   </div>
                 </div>
                 <div className="grid gap-2">
                   <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Required skills</label>
                   <div className="flex flex-wrap gap-2">
-                    {["Product design", "React", "Brand systems", "Analytics"].map((skill) => (
+                    {projectSkills.map((skill) => (
                       <span key={skill} className="client-pill">{skill}</span>
                     ))}
-                    <button className="client-btn-ghost" type="button">Add skill</button>
+                    <button className="client-btn-ghost" type="button" onClick={addProjectSkill}>Add skill</button>
                   </div>
                 </div>
               </div>
@@ -1191,7 +1966,14 @@ function ClientApp({ onNavigate }) {
                     </div>
                   ))}
                 </div>
-                <button className="mt-6 client-btn-primary" type="button">Publish project</button>
+                <button className="mt-6 client-btn-primary" type="button" onClick={publishProject}>Publish project</button>
+                {publishedProjects.length > 0 && (
+                  <div className="mt-4 rounded-2xl border border-blue-100 bg-white p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Latest published</p>
+                    <p className="mt-2 text-sm font-semibold text-slate-900">{publishedProjects[0].title}</p>
+                    <p className="mt-1 text-xs text-slate-500">{publishedProjects[0].skills.join(", ")}</p>
+                  </div>
+                )}
               </div>
             </div>
           </section>
@@ -1230,7 +2012,7 @@ function ClientApp({ onNavigate }) {
                       <div className="client-progress-bar" style={{ width: talent.match }} />
                     </div>
                   </div>
-                  <button className="mt-5 client-btn-ghost" type="button">Open profile</button>
+                  <button className="mt-5 client-btn-ghost" type="button" onClick={() => notify(`${talent.name}'s comparison profile is open.`)}>Open profile</button>
                 </div>
               ))}
             </div>
@@ -1249,12 +2031,26 @@ function ClientApp({ onNavigate }) {
                   <span className="client-pill">Project Delta</span>
                 </div>
                 <div className="mt-4 space-y-3 text-sm text-slate-600">
-                  <div className="rounded-2xl bg-slate-50 px-4 py-3">Hi Sivon, milestone 1 design files are ready for review.</div>
-                  <div className="rounded-2xl bg-blue-50 px-4 py-3 text-blue-700">Thanks! I will review and share feedback by EOD.</div>
+                  {clientMessages.map((message, index) => (
+                    <div
+                      key={`${message.text}-${index}`}
+                      className={message.side === "right" ? "rounded-2xl bg-blue-50 px-4 py-3 text-blue-700" : "rounded-2xl bg-slate-50 px-4 py-3"}
+                    >
+                      {message.text}
+                    </div>
+                  ))}
                 </div>
                 <div className="mt-4 flex items-center gap-2">
-                  <input className="h-11 flex-1 rounded-xl border border-slate-200 bg-white px-4 text-sm" placeholder="Type a message" />
-                  <button className="client-btn-primary" type="button">
+                  <input
+                    value={clientMessage}
+                    onChange={(e) => setClientMessage(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") sendClientMessage();
+                    }}
+                    className="h-11 min-w-0 flex-1 rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none transition focus:border-blue-400"
+                    placeholder="Type a message"
+                  />
+                  <button className="client-btn-primary" type="button" onClick={sendClientMessage}>
                     <Send className="h-4 w-4" />
                   </button>
                 </div>
@@ -1275,7 +2071,7 @@ function ClientApp({ onNavigate }) {
                     <span className="text-xs text-slate-400">This week</span>
                   </div>
                 </div>
-                <button className="mt-5 client-btn-ghost" type="button">Open team board</button>
+                <button className="mt-5 client-btn-ghost" type="button" onClick={() => notify("Team board opened with three active collaboration tasks.")}>Open team board</button>
               </div>
             </div>
           </section>
@@ -1295,20 +2091,20 @@ function ClientApp({ onNavigate }) {
                     <span className="font-semibold text-slate-900">₹8.6L</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>Next release</span>
-                    <span className="font-semibold text-slate-900">₹2.8L</span>
+                    <span>Released milestones</span>
+                    <span className="font-semibold text-slate-900">{releasedTotal}/{clientMilestones.length}</span>
                   </div>
                   <div className="client-progress">
                     <div className="client-progress-bar" style={{ width: "72%" }} />
                   </div>
                   <p className="text-xs text-slate-400">72% of total budget secured</p>
                 </div>
-                <button className="mt-6 client-btn-primary" type="button">Release milestone</button>
+                <button className="mt-6 client-btn-primary" type="button" onClick={releaseMilestone}>Release milestone</button>
               </div>
               <div className="client-card">
                 <p className="text-sm font-semibold text-slate-900">Milestones</p>
                 <div className="mt-4 grid gap-3">
-                  {milestones.map((milestone) => (
+                  {clientMilestones.map((milestone) => (
                     <div key={milestone.title} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3">
                       <div>
                         <p className="text-sm font-semibold text-slate-800">{milestone.title}</p>
@@ -1400,6 +2196,53 @@ function FreelancerApp({ onNavigate }) {
     { label: "Client comms", value: 88 }
   ];
 
+  const [notice, setNotice] = useState("");
+  const [profileRefreshes, setProfileRefreshes] = useState(0);
+  const [filteredJobs, setFilteredJobs] = useState(false);
+  const [proposalList, setProposalList] = useState(proposals);
+  const [freelancerMessages, setFreelancerMessages] = useState([
+    { side: "left", text: "We love the direction. Can you explore a darker hero?" },
+    { side: "right", text: "Absolutely. I’ll share two variants by tomorrow." }
+  ]);
+  const [freelancerReply, setFreelancerReply] = useState("");
+  const [weeklyGoalSet, setWeeklyGoalSet] = useState(false);
+
+  const visibleJobMatches = filteredJobs
+    ? jobMatches.filter((job) => Number.parseInt(job.match, 10) >= 90)
+    : jobMatches;
+
+  function notify(message) {
+    setNotice(message);
+  }
+
+  function sharePortfolio() {
+    navigator.clipboard?.writeText(window.location.origin + "/freelancer").catch(() => {});
+    notify("Portfolio link copied for sharing.");
+  }
+
+  function refreshProfile() {
+    setProfileRefreshes((current) => current + 1);
+    notify("Profile refreshed with the latest portfolio and skill signals.");
+  }
+
+  function generateProposal() {
+    const nextProposal = {
+      name: "AI workflow implementation",
+      status: "Draft",
+      client: "Cloudlane"
+    };
+    setProposalList((current) => [nextProposal, ...current]);
+    notify("New proposal draft generated in the tracker.");
+  }
+
+  function sendFreelancerReply() {
+    const trimmed = freelancerReply.trim();
+    if (!trimmed) return;
+    setFreelancerMessages((current) => [...current, { side: "right", text: trimmed }]);
+    setFreelancerReply("");
+    notify("Reply sent to Orbit Cloud.");
+  }
+
   return (
     <div className="freelancer-shell">
       <header className="freelancer-topbar">
@@ -1421,9 +2264,9 @@ function FreelancerApp({ onNavigate }) {
                 placeholder="Search jobs, clients, skills"
               />
             </div>
-            <button className="freelancer-btn-ghost" type="button">Share portfolio</button>
-            <button className="freelancer-btn-primary" type="button">New proposal</button>
-            <button className="icon-button" type="button" aria-label="Notifications">
+            <button className="freelancer-btn-ghost" type="button" onClick={sharePortfolio}>Share portfolio</button>
+            <button className="freelancer-btn-primary" type="button" onClick={generateProposal}>New proposal</button>
+            <button className="icon-button" type="button" aria-label="Notifications" onClick={() => notify("You have 3 proposal drafts and 2 client follow-ups due today.")}>
               <Bell className="h-4 w-4" />
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-purple-400" />
             </button>
@@ -1461,14 +2304,19 @@ function FreelancerApp({ onNavigate }) {
                 <p className="text-xs text-slate-400">3 drafts ready to polish</p>
               </div>
             </div>
-            <button className="mt-4 w-full rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs font-semibold text-white">
+            <button
+              className="mt-4 w-full rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/15"
+              type="button"
+              onClick={() => scrollToSection("#freelancer-proposals")}
+            >
               Launch assistant
             </button>
           </div>
           <div className="mt-6 text-xs text-slate-400">Reputation · Achievements · Settings</div>
         </aside>
 
-        <main className="flex-1 space-y-12">
+        <main className="min-w-0 flex-1 space-y-12">
+          <ActionBanner message={notice} />
           <section id="freelancer-dashboard" className="freelancer-card">
             <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
               <div>
@@ -1480,11 +2328,13 @@ function FreelancerApp({ onNavigate }) {
                   Your workspace blends portfolio highlights, AI proposal support, and performance insights to keep you ahead.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <button className="freelancer-btn-primary" type="button">
+                  <button className="freelancer-btn-primary" type="button" onClick={() => scrollToSection("#freelancer-jobs")}>
                     Discover new roles
                     <ArrowUpRight className="h-4 w-4" />
                   </button>
-                  <button className="freelancer-btn-ghost" type="button">Refresh profile</button>
+                  <button className="freelancer-btn-ghost" type="button" onClick={refreshProfile}>
+                    {profileRefreshes ? `Refreshed ${profileRefreshes}x` : "Refresh profile"}
+                  </button>
                 </div>
               </div>
               <div className="grid gap-4">
@@ -1546,7 +2396,7 @@ function FreelancerApp({ onNavigate }) {
               <div className="freelancer-card">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold text-white">Portfolio gallery</p>
-                  <button className="freelancer-btn-ghost" type="button">Customize</button>
+                  <button className="freelancer-btn-ghost" type="button" onClick={() => notify("Portfolio customization panel opened.")}>Customize</button>
                 </div>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   {portfolioHighlights.map((item) => (
@@ -1571,10 +2421,12 @@ function FreelancerApp({ onNavigate }) {
               <div className="freelancer-card">
                 <div className="flex items-center justify-between">
                   <p className="text-sm font-semibold text-white">Recommended jobs</p>
-                  <button className="freelancer-btn-ghost" type="button">Filter</button>
+                  <button className="freelancer-btn-ghost" type="button" onClick={() => setFilteredJobs((current) => !current)}>
+                    {filteredJobs ? "Show all" : "Filter"}
+                  </button>
                 </div>
                 <div className="mt-4 space-y-3">
-                  {jobMatches.map((job) => (
+                  {visibleJobMatches.map((job) => (
                     <div key={job.title} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
                       <div className="flex items-center justify-between">
                         <p className="text-sm font-semibold text-white">{job.title}</p>
@@ -1607,7 +2459,16 @@ function FreelancerApp({ onNavigate }) {
                     </div>
                   ))}
                 </div>
-                <button className="mt-5 freelancer-btn-primary" type="button">Set weekly goals</button>
+                <button
+                  className="mt-5 freelancer-btn-primary"
+                  type="button"
+                  onClick={() => {
+                    setWeeklyGoalSet(true);
+                    notify("Weekly goal set: submit 3 high-fit proposals and update 2 case studies.");
+                  }}
+                >
+                  {weeklyGoalSet ? "Goals set" : "Set weekly goals"}
+                </button>
               </div>
             </div>
           </section>
@@ -1622,7 +2483,7 @@ function FreelancerApp({ onNavigate }) {
               <div className="freelancer-card">
                 <p className="text-sm font-semibold text-white">Proposal tracker</p>
                 <div className="mt-4 space-y-3">
-                  {proposals.map((proposal) => (
+                  {proposalList.map((proposal) => (
                     <div key={proposal.name} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
                       <div>
                         <p className="text-sm font-semibold text-white">{proposal.name}</p>
@@ -1632,7 +2493,7 @@ function FreelancerApp({ onNavigate }) {
                     </div>
                   ))}
                 </div>
-                <button className="mt-5 freelancer-btn-ghost" type="button">View pipeline</button>
+                <button className="mt-5 freelancer-btn-ghost" type="button" onClick={() => notify(`${proposalList.length} proposals are visible in your pipeline.`)}>View pipeline</button>
               </div>
               <div className="freelancer-card">
                 <p className="text-sm font-semibold text-white">AI proposal assistant</p>
@@ -1648,7 +2509,7 @@ function FreelancerApp({ onNavigate }) {
                     </div>
                   ))}
                 </div>
-                <button className="mt-5 freelancer-btn-primary" type="button">Generate proposal</button>
+                <button className="mt-5 freelancer-btn-primary" type="button" onClick={generateProposal}>Generate proposal</button>
               </div>
             </div>
           </section>
@@ -1706,12 +2567,26 @@ function FreelancerApp({ onNavigate }) {
                   <span className="freelancer-pill">Orbit Cloud</span>
                 </div>
                 <div className="mt-4 space-y-3 text-sm text-slate-300">
-                  <div className="rounded-2xl bg-white/5 px-4 py-3">We love the direction. Can you explore a darker hero?</div>
-                  <div className="rounded-2xl bg-indigo-500/20 px-4 py-3 text-white">Absolutely. I’ll share two variants by tomorrow.</div>
+                  {freelancerMessages.map((message, index) => (
+                    <div
+                      key={`${message.text}-${index}`}
+                      className={message.side === "right" ? "rounded-2xl bg-indigo-500/20 px-4 py-3 text-white" : "rounded-2xl bg-white/5 px-4 py-3"}
+                    >
+                      {message.text}
+                    </div>
+                  ))}
                 </div>
                 <div className="mt-4 flex items-center gap-2">
-                  <input className="h-11 flex-1 rounded-xl border border-white/10 bg-white/5 px-4 text-sm text-slate-200" placeholder="Write a reply" />
-                  <button className="freelancer-btn-primary" type="button">
+                  <input
+                    value={freelancerReply}
+                    onChange={(e) => setFreelancerReply(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") sendFreelancerReply();
+                    }}
+                    className="h-11 min-w-0 flex-1 rounded-xl border border-white/10 bg-white/5 px-4 text-sm text-slate-200 outline-none transition focus:border-indigo-300"
+                    placeholder="Write a reply"
+                  />
+                  <button className="freelancer-btn-primary" type="button" onClick={sendFreelancerReply}>
                     <Send className="h-4 w-4" />
                   </button>
                 </div>
@@ -1730,7 +2605,7 @@ function FreelancerApp({ onNavigate }) {
                     </div>
                   ))}
                 </div>
-                <button className="mt-5 freelancer-btn-ghost" type="button">Open calendar</button>
+                <button className="mt-5 freelancer-btn-ghost" type="button" onClick={() => notify("Calendar opened with 3 upcoming touchpoints.")}>Open calendar</button>
               </div>
             </div>
           </section>
@@ -1791,11 +2666,10 @@ function NewProposalButton() {
     }
     if (user.role === "client") {
       // clients should post projects
-      window.location.href = "#post";
+      window.location.href = "/client#client-post";
       return;
     }
-    // freelancers: open proposal creation flow (placeholder)
-    alert("Open New Proposal flow (freelancer)");
+    window.location.href = "/freelancer#freelancer-proposals";
   }
 
   return (
@@ -1905,7 +2779,13 @@ function AppShell() {
 
   function navigate(path) {
     window.history.pushState({}, "", path);
-    setAppRoute(getAppRoute(path));
+    const url = new URL(path, window.location.origin);
+    setAppRoute(getAppRoute(url.pathname));
+    if (url.hash) {
+      window.setTimeout(() => scrollToSection(url.hash), 80);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }
 
   function openAuth(type = "login") {
@@ -1939,7 +2819,7 @@ function AppShell() {
         onSignUpClick={() => openAuth("register")}
         onNavigate={navigate}
       />
-      <main>
+      <main className="lg:pl-72">
         <Hero />
         <TrendingSkills />
         <Projects />
@@ -1950,7 +2830,9 @@ function AppShell() {
         <Pricing />
         <Testimonials />
       </main>
-      <Footer />
+      <div className="lg:pl-72">
+        <Footer />
+      </div>
     </div>
   );
 }
