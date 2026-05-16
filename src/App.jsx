@@ -369,12 +369,8 @@ function Hero() {
               <BarChart3 className="h-4 w-4" />
             </a>
           </div>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {["AI agents", "React", "AWS", "No-code ops", "UX systems"].map((item) => (
-              <a href="#trends" key={item} className="category-pill">
-                {item}
-              </a>
-            ))}
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-slate-300">
+            Connect the backend to surface live skills, projects, and market signals.
           </div>
         </motion.div>
 
@@ -412,13 +408,15 @@ function Hero() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Workspaces
                 </p>
-                <p className="mt-1 text-xl font-bold text-white">Client and freelancer</p>
+                <p className="mt-1 text-xl font-bold text-white">Connected workspaces</p>
               </div>
-              <span className="text-3xl font-bold text-cyan-200">2 roles</span>
+              <span className="rounded-full bg-white/10 px-3 py-1 text-sm font-semibold text-slate-300">
+                Live data only
+              </span>
             </div>
             <div className="space-y-3">
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300">
-                Role-specific dashboards load after sign-in.
+                Role-specific dashboards load after sign-in and backend sync.
               </div>
             </div>
           </motion.div>
@@ -640,20 +638,20 @@ function Pricing() {
   const tiers = [
     {
       name: "Free",
-      price: "$0",
+      price: "₹0",
       copy: "For freelancers exploring demand signals.",
       features: ["Basic project search", "5 tracked skills", "Portfolio checklist"]
     },
     {
       name: "Pro Freelancer",
-      price: "$19",
+      price: "₹1,499",
       copy: "For serious freelancers growing revenue.",
       features: ["Unlimited skill trends", "AI recommendations", "Client chat insights"],
       popular: true
     },
     {
       name: "Agency",
-      price: "$79",
+      price: "₹5,999",
       copy: "For teams matching talent to demand.",
       features: ["Team dashboard", "Talent pipeline", "Advanced market exports"]
     }
@@ -663,8 +661,8 @@ function Pricing() {
     <section id="pricing" className="section-shell">
       <SectionHeading
         eyebrow="Pricing"
-        title="Start free, scale with your freelance career."
-        copy="Simple tiers for independent freelancers, high-growth specialists, and agencies managing multiple profiles."
+        title="Pricing in Indian Rupees."
+        copy="The pricing table now displays INR so the app matches the Indian market."
       />
       <div className="grid gap-5 lg:grid-cols-3">
         {tiers.map((tier, index) => (
