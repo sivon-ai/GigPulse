@@ -14,7 +14,7 @@ function flattenErrors(err) {
     .join(" ") || "Authentication failed. Please check your details.";
 }
 
-export default function AuthModal({ open, onClose, type = "login" }) {
+export default function AuthModal({ open, onClose, type = "login", variant = "modal" }) {
   const { login, register } = useAuth();
   const [role, setRole] = useState("freelancer");
   const [email, setEmail] = useState("");
@@ -24,7 +24,9 @@ export default function AuthModal({ open, onClose, type = "login" }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  if (!open) return null;
+  const isPage = variant === "page";
+
+  if (!open && !isPage) return null;
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -44,13 +46,35 @@ export default function AuthModal({ open, onClose, type = "login" }) {
     }
   }
 
+  const containerClass = isPage
+    ? "min-h-screen w-full bg-slate-950 px-4 pb-10 pt-20"
+    : "fixed inset-0 z-50 grid place-items-center bg-slate-950/70 px-4 backdrop-blur-md";
+  const cardClass = isPage
+    ? "mx-auto w-full max-w-5xl overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/95 shadow-2xl shadow-blue-950/50"
+    : "w-full max-w-4xl overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/95 shadow-2xl shadow-blue-950/50";
+
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/70 px-4 backdrop-blur-md">
+    <div className={containerClass}>
+      {isPage && (
+        <div className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+          <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+            <a href="/" className="flex items-center gap-3 text-white">
+              <span className="grid h-9 w-9 place-items-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-cyan-400 shadow-glow">
+                GP
+              </span>
+              <span className="font-display text-lg font-bold">GigPulse</span>
+            </a>
+            <button type="button" onClick={onClose} className="btn-ghost">
+              Back to home
+            </button>
+          </div>
+        </div>
+      )}
       <motion.div
         initial={{ scale: 0.96, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         transition={{ duration: 0.22 }}
-        className="w-full max-w-4xl overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/95 shadow-2xl shadow-blue-950/50"
+        className={cardClass}
       >
         <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
           <div className="relative overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.26),transparent_36%),linear-gradient(180deg,rgba(15,23,42,0.98),rgba(8,15,31,0.98))] p-8 lg:border-b-0 lg:border-r">
@@ -106,14 +130,16 @@ export default function AuthModal({ open, onClose, type = "login" }) {
                 <p className="text-sm uppercase tracking-[0.22em] text-cyan-300">{type === "login" ? "Login" : "Sign up"}</p>
                 <h3 className="mt-1 text-2xl font-bold text-white">{type === "login" ? "Access your dashboard" : "Set up your profile"}</h3>
               </div>
-              <button
-                type="button"
-                onClick={onClose}
-                className="icon-button"
-                aria-label="Close modal"
-              >
-                ×
-              </button>
+              {onClose && (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className={isPage ? "btn-ghost" : "icon-button"}
+                  aria-label="Close auth"
+                >
+                  {isPage ? "Back to home" : "×"}
+                </button>
+              )}
             </div>
 
             <form onSubmit={handleSubmit} className="grid gap-4">

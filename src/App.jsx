@@ -816,8 +816,7 @@ function NewProposalButton() {
 
 export default function App() {
   const [isLight, setIsLight] = useState(false);
-  const [authOpen, setAuthOpen] = useState(false);
-  const [authType, setAuthType] = useState("login");
+  const [authRoute, setAuthRoute] = useState(() => getAuthRoute(window.location.pathname));
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -825,8 +824,15 @@ export default function App() {
       const type = e?.detail?.type || "login";
       openAuth(type);
     }
+    function handlePopState() {
+      setAuthRoute(getAuthRoute(window.location.pathname));
+    }
     window.addEventListener("openAuth", handleOpenAuth);
-    return () => window.removeEventListener("openAuth", handleOpenAuth);
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("openAuth", handleOpenAuth);
+      window.removeEventListener("popstate", handlePopState);
+    };
   }, []);
 
   const appClass = useMemo(
@@ -837,34 +843,51 @@ export default function App() {
     [isLight]
   );
 
+  function navigate(path) {
+    window.history.pushState({}, "", path);
+    setAuthRoute(getAuthRoute(path));
+  }
+
   function openAuth(type = "login") {
-    setAuthType(type);
-    setAuthOpen(true);
+    navigate(type === "register" ? "/signup" : "/login");
   }
 
   return (
     <AuthProvider>
       <div className={appClass}>
-        <Navbar
-          isLight={isLight}
-          onToggleTheme={() => setIsLight((current) => !current)}
-          onLoginClick={() => openAuth("login")}
-          onSignUpClick={() => openAuth("register")}
-        />
-        <main>
-          <Hero />
-          <TrendingSkills />
-          <Projects />
-          <FreelancerProfiles />
-          <AIRecommendation />
-          <ChatPreview />
-          <Dashboard />
-          <Pricing />
-          <Testimonials />
-        </main>
-        <Footer />
-        <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} type={authType} />
+        {authRoute ? (
+          <AuthModal open onClose={() => navigate("/")} type={authRoute} variant="page" />
+        ) : (
+          <>
+            <Navbar
+              isLight={isLight}
+              onToggleTheme={() => setIsLight((current) => !current)}
+              onLoginClick={() => openAuth("login")}
+              onSignUpClick={() => openAuth("register")}
+            />
+            <main>
+              <Hero />
+              <TrendingSkills />
+              <Projects />
+              <FreelancerProfiles />
+              <AIRecommendation />
+              <ChatPreview />
+              <Dashboard />
+              <Pricing />
+              <Testimonials />
+            </main>
+            <Footer />
+          </>
+        )}
       </div>
     </AuthProvider>
   );
+}
+
+function getAuthRoute(pathname) {
+  if (!pathname) return null;
+  const path = pathname.toLowerCase();
+  if (path.startsWith("/login")) return "login";
+  if (path.startsWith("/signup") || path.startsWith("/register")) return "register";
+  return null;
 }
