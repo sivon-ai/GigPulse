@@ -81,6 +81,26 @@ const sidebarItems = [
   { label: "Settings", icon: Settings }
 ];
 
+const clientNavItems = [
+  { label: "Dashboard", href: "#client-dashboard", icon: LayoutDashboard },
+  { label: "Post Project", href: "#client-post", icon: FileText },
+  { label: "Proposals", href: "#client-proposals", icon: Folder },
+  { label: "Compare Talent", href: "#client-compare", icon: Users },
+  { label: "Messaging", href: "#client-messaging", icon: MessageSquare },
+  { label: "Payments", href: "#client-payments", icon: Wallet },
+  { label: "Analytics", href: "#client-analytics", icon: LineChart },
+];
+
+const freelancerNavItems = [
+  { label: "Dashboard", href: "#freelancer-dashboard", icon: LayoutDashboard },
+  { label: "Portfolio", href: "#freelancer-portfolio", icon: UserRound },
+  { label: "Jobs", href: "#freelancer-jobs", icon: Search },
+  { label: "Proposals", href: "#freelancer-proposals", icon: FileText },
+  { label: "Earnings", href: "#freelancer-earnings", icon: Wallet },
+  { label: "Messages", href: "#freelancer-messages", icon: MessageSquare },
+  { label: "Skill Growth", href: "#freelancer-skills", icon: Sparkles }
+];
+
 function AnimatedNumber({ value, prefix = "", suffix = "" }) {
   const motionValue = useMotionValue(0);
   const spring = useSpring(motionValue, { stiffness: 80, damping: 18 });
@@ -109,6 +129,34 @@ function SectionHeading({ eyebrow, title, copy, align = "center" }) {
         {title}
       </h2>
       {copy && <p className="mt-4 text-base leading-7 text-slate-300">{copy}</p>}
+    </div>
+  );
+}
+
+function ClientSectionHeading({ title, subtitle, copy }) {
+  return (
+    <div className="mb-6">
+      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
+        {subtitle}
+      </p>
+      <h2 className="mt-2 text-2xl font-semibold text-slate-900 sm:text-3xl">
+        {title}
+      </h2>
+      {copy && <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-500">{copy}</p>}
+    </div>
+  );
+}
+
+function FreelancerSectionHeading({ title, subtitle, copy }) {
+  return (
+    <div className="mb-6">
+      <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">
+        {subtitle}
+      </p>
+      <h2 className="freelancer-heading mt-2 text-2xl font-semibold text-white sm:text-3xl">
+        {title}
+      </h2>
+      {copy && <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">{copy}</p>}
     </div>
   );
 }
@@ -791,6 +839,892 @@ function Footer() {
   );
 }
 
+function ClientApp({ onNavigate }) {
+  const metrics = [
+    { label: "Open roles", value: "12", detail: "3 awaiting review" },
+    { label: "Active projects", value: "6", detail: "2 due this week" },
+    { label: "Avg time to hire", value: "4.2 days", detail: "-18% vs last month" },
+    { label: "Spend in escrow", value: "₹8.6L", detail: "Across 9 milestones" }
+  ];
+
+  const proposalPipeline = [
+    { stage: "New", count: 18, color: "bg-blue-500/10 text-blue-700" },
+    { stage: "Shortlisted", count: 7, color: "bg-cyan-500/10 text-cyan-700" },
+    { stage: "Interview", count: 4, color: "bg-emerald-500/10 text-emerald-700" },
+    { stage: "Hired", count: 2, color: "bg-slate-900/10 text-slate-700" }
+  ];
+
+  const proposals = [
+    { name: "Aarav Mehta", role: "Senior React Engineer", rate: "₹4,800/hr", score: "92%", status: "Interview" },
+    { name: "Priya Nair", role: "Product Designer", rate: "₹3,600/hr", score: "88%", status: "Shortlisted" },
+    { name: "Daniel Chow", role: "Data Engineer", rate: "₹5,200/hr", score: "84%", status: "New" },
+  ];
+
+  const comparisons = [
+    { name: "Zara Patel", title: "Full-stack Lead", rating: "4.9", projects: "48", badges: ["Verified", "Top 3%"], match: "96%" },
+    { name: "Neel Shah", title: "Cloud Architect", rating: "4.8", projects: "38", badges: ["Verified", "Fast responder"], match: "93%" },
+    { name: "Maya Collins", title: "Product Strategist", rating: "4.7", projects: "31", badges: ["Verified", "AI-ready"], match: "91%" }
+  ];
+
+  const milestones = [
+    { title: "Discovery & kickoff", amount: "₹1.2L", due: "May 22", status: "Funded" },
+    { title: "Design system delivery", amount: "₹2.8L", due: "Jun 3", status: "In review" },
+    { title: "Sprint 1 build", amount: "₹3.1L", due: "Jun 14", status: "Upcoming" }
+  ];
+
+  const notifications = [
+    { title: "3 proposals require feedback", time: "10 min ago" },
+    { title: "Escrow for Project Delta funded", time: "2 hours ago" },
+    { title: "AI match update: 4 new top-fit freelancers", time: "Yesterday" }
+  ];
+
+  return (
+    <div className="client-shell">
+      <header className="client-topbar">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-slate-900 text-white">GP</span>
+            <div>
+              <p className="text-sm font-semibold text-slate-900">GigPulse Client</p>
+              <p className="text-xs text-slate-500">Hiring workspace</p>
+            </div>
+          </div>
+          <div className="hidden items-center gap-3 md:flex">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <input
+                className="h-10 w-64 rounded-full border border-slate-200 bg-white pl-9 pr-4 text-sm text-slate-700 outline-none transition focus:border-blue-400"
+                placeholder="Search freelancers or projects"
+              />
+            </div>
+            <button className="client-btn-ghost" type="button">Invite team</button>
+            <button className="client-btn-primary" type="button">Post project</button>
+            <button className="icon-button" type="button" aria-label="Notifications">
+              <Bell className="h-4 w-4" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-cyan-400" />
+            </button>
+            <button className="client-btn-ghost" type="button" onClick={() => onNavigate("/")}>Marketing site</button>
+          </div>
+        </div>
+      </header>
+
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-16 pt-8 lg:flex-row">
+        <aside className="client-sidebar w-full p-5 lg:sticky lg:top-24 lg:h-[calc(100vh-7rem)] lg:w-64">
+          <div className="mb-6">
+            <p className="text-xs uppercase tracking-[0.28em] text-slate-400">Workspace</p>
+            <p className="mt-2 text-lg font-semibold text-white">Sivon AI Studio</p>
+            <p className="text-xs text-slate-400">Enterprise plan</p>
+          </div>
+          <nav className="grid gap-2">
+            {clientNavItems.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10"
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div className="flex items-center gap-3">
+              <div className="grid h-9 w-9 place-items-center rounded-xl bg-cyan-400/15 text-cyan-200">
+                <Sparkles className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">AI matching</p>
+                <p className="text-xs text-slate-400">4 new matches today</p>
+              </div>
+            </div>
+            <button className="mt-4 w-full rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs font-semibold text-white">
+              Review matches
+            </button>
+          </div>
+          <div className="mt-6 text-xs text-slate-400">Settings · Security · Billing</div>
+        </aside>
+
+        <main className="flex-1 space-y-12">
+          <section id="client-hero" className="client-card">
+            <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div>
+                <p className="client-pill inline-flex items-center gap-2">Client workspace</p>
+                <h1 className="mt-4 text-3xl font-semibold text-slate-900 sm:text-4xl">
+                  Hire verified freelancers with clarity, control, and speed.
+                </h1>
+                <p className="mt-3 text-sm leading-6 text-slate-500">
+                  Organize proposals, manage contracts, and track delivery milestones in one secure workspace.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button className="client-btn-primary" type="button">
+                    Post a premium project
+                    <ArrowUpRight className="h-4 w-4" />
+                  </button>
+                  <button className="client-btn-ghost" type="button">View hiring insights</button>
+                </div>
+              </div>
+              <div className="grid gap-4">
+                {metrics.slice(0, 2).map((metric) => (
+                  <div key={metric.label} className="client-card-muted">
+                    <p className="text-sm font-semibold text-slate-700">{metric.label}</p>
+                    <p className="mt-2 text-2xl font-semibold text-slate-900">{metric.value}</p>
+                    <p className="mt-2 text-xs text-slate-500">{metric.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section id="client-dashboard">
+            <ClientSectionHeading
+              subtitle="Dashboard"
+              title="Client dashboard"
+              copy="Track spend, proposal velocity, and delivery confidence across every project."
+            />
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {metrics.map((metric) => (
+                <div key={metric.label} className="client-card">
+                  <p className="text-sm text-slate-500">{metric.label}</p>
+                  <p className="mt-3 text-2xl font-semibold text-slate-900">{metric.value}</p>
+                  <p className="mt-2 text-xs text-slate-500">{metric.detail}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="client-card">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-900">AI freelancer matching</p>
+                    <p className="mt-2 text-sm text-slate-500">Shortlist ready-to-hire talent aligned to your scope.</p>
+                  </div>
+                  <span className="client-badge"><BadgeCheck className="h-3 w-3" /> Verified matches</span>
+                </div>
+                <div className="mt-6 grid gap-3">
+                  {[
+                    "Frontend lead with Stripe/Linear design systems experience",
+                    "Senior backend engineer with 92% on-time delivery score",
+                    "Product designer available within 72 hours"
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3 text-sm text-slate-600">
+                      <Sparkles className="h-4 w-4 text-cyan-500" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="client-card">
+                <p className="text-sm font-semibold text-slate-900">Activity timeline</p>
+                <div className="mt-4 space-y-4">
+                  {[
+                    { title: "New proposal received", meta: "Product design · 12 minutes ago" },
+                    { title: "Milestone approved", meta: "Fintech revamp · 2 hours ago" },
+                    { title: "Contract signed", meta: "Cloud migration · Yesterday" }
+                  ].map((item) => (
+                    <div key={item.title} className="flex items-start gap-3">
+                      <span className="mt-1 h-2 w-2 rounded-full bg-blue-500" />
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">{item.title}</p>
+                        <p className="text-xs text-slate-500">{item.meta}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50/70 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Smart notifications</p>
+                  <div className="mt-3 space-y-3">
+                    {notifications.map((note) => (
+                      <div key={note.title} className="flex items-center justify-between text-sm text-slate-600">
+                        <span>{note.title}</span>
+                        <span className="text-xs text-slate-400">{note.time}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="client-proposals">
+            <ClientSectionHeading
+              subtitle="Proposal management"
+              title="Proposal pipeline"
+              copy="Move proposals through a structured, audit-ready pipeline with clear ownership."
+            />
+            <div className="grid gap-4 lg:grid-cols-4">
+              {proposalPipeline.map((stage) => (
+                <div key={stage.stage} className="client-card">
+                  <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${stage.color}`}>
+                    {stage.stage}
+                  </div>
+                  <p className="mt-4 text-3xl font-semibold text-slate-900">{stage.count}</p>
+                  <p className="text-xs text-slate-500">Proposals in queue</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 client-card">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-slate-900">Latest proposals</p>
+                <button className="client-btn-ghost" type="button">View all</button>
+              </div>
+              <div className="mt-4 grid gap-3">
+                {proposals.map((proposal) => (
+                  <div key={proposal.name} className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">{proposal.name}</p>
+                      <p className="text-xs text-slate-500">{proposal.role}</p>
+                    </div>
+                    <div className="text-xs text-slate-500">{proposal.rate}</div>
+                    <span className="client-badge"><BadgeCheck className="h-3 w-3" /> {proposal.score} fit</span>
+                    <span className="client-pill">{proposal.status}</span>
+                    <button className="client-btn-ghost" type="button">Review</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section id="client-post">
+            <ClientSectionHeading
+              subtitle="Post project"
+              title="Launch a new project in minutes"
+              copy="Structured briefs improve proposal quality and keep hiring aligned with budget and timeline."
+            />
+            <div className="client-card grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="grid gap-4">
+                <div className="grid gap-2">
+                  <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Project title</label>
+                  <input className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700" placeholder="e.g., SaaS onboarding redesign" />
+                </div>
+                <div className="grid gap-2">
+                  <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Scope summary</label>
+                  <textarea className="min-h-[120px] rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700" placeholder="Key goals, deliverables, and success criteria." />
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div className="grid gap-2">
+                    <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Budget range</label>
+                    <input className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700" placeholder="₹3L - ₹6L" />
+                  </div>
+                  <div className="grid gap-2">
+                    <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Timeline</label>
+                    <input className="h-11 rounded-xl border border-slate-200 bg-white px-4 text-sm text-slate-700" placeholder="6 weeks" />
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <label className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Required skills</label>
+                  <div className="flex flex-wrap gap-2">
+                    {["Product design", "React", "Brand systems", "Analytics"].map((skill) => (
+                      <span key={skill} className="client-pill">{skill}</span>
+                    ))}
+                    <button className="client-btn-ghost" type="button">Add skill</button>
+                  </div>
+                </div>
+              </div>
+              <div className="client-card-muted">
+                <p className="text-sm font-semibold text-slate-900">Hiring checklist</p>
+                <div className="mt-4 space-y-3 text-sm text-slate-600">
+                  {[
+                    "Define the success metrics",
+                    "Assign an internal owner",
+                    "Choose payment schedule",
+                    "Enable verified-only proposals"
+                  ].map((item) => (
+                    <div key={item} className="flex items-center gap-2">
+                      <Check className="h-4 w-4 text-cyan-500" />
+                      {item}
+                    </div>
+                  ))}
+                </div>
+                <button className="mt-6 client-btn-primary" type="button">Publish project</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="client-compare">
+            <ClientSectionHeading
+              subtitle="Freelancer comparison"
+              title="Compare shortlisted freelancers"
+              copy="Side-by-side insights keep you confident when selecting top talent."
+            />
+            <div className="grid gap-4 lg:grid-cols-3">
+              {comparisons.map((talent) => (
+                <div key={talent.name} className="client-card">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">{talent.name}</p>
+                      <p className="text-xs text-slate-500">{talent.title}</p>
+                    </div>
+                    <span className="client-badge"><BadgeCheck className="h-3 w-3" /> Verified</span>
+                  </div>
+                  <div className="mt-4 flex items-center gap-4 text-sm text-slate-600">
+                    <span className="flex items-center gap-1"><Star className="h-4 w-4 text-amber-500" /> {talent.rating}</span>
+                    <span>{talent.projects} projects</span>
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {talent.badges.map((badge) => (
+                      <span key={badge} className="client-pill">{badge}</span>
+                    ))}
+                  </div>
+                  <div className="mt-5">
+                    <div className="flex items-center justify-between text-xs text-slate-500">
+                      <span>Match score</span>
+                      <span className="font-semibold text-slate-700">{talent.match}</span>
+                    </div>
+                    <div className="client-progress mt-2">
+                      <div className="client-progress-bar" style={{ width: talent.match }} />
+                    </div>
+                  </div>
+                  <button className="mt-5 client-btn-ghost" type="button">Open profile</button>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section id="client-messaging">
+            <ClientSectionHeading
+              subtitle="Messaging & collaboration"
+              title="Stay aligned with freelancers"
+              copy="Coordinate timelines, files, and approvals without leaving the workspace."
+            />
+            <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="client-card">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-slate-900">Active conversation</p>
+                  <span className="client-pill">Project Delta</span>
+                </div>
+                <div className="mt-4 space-y-3 text-sm text-slate-600">
+                  <div className="rounded-2xl bg-slate-50 px-4 py-3">Hi Sivon, milestone 1 design files are ready for review.</div>
+                  <div className="rounded-2xl bg-blue-50 px-4 py-3 text-blue-700">Thanks! I will review and share feedback by EOD.</div>
+                </div>
+                <div className="mt-4 flex items-center gap-2">
+                  <input className="h-11 flex-1 rounded-xl border border-slate-200 bg-white px-4 text-sm" placeholder="Type a message" />
+                  <button className="client-btn-primary" type="button">
+                    <Send className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="client-card">
+                <p className="text-sm font-semibold text-slate-900">Team collaboration</p>
+                <div className="mt-4 space-y-3 text-sm text-slate-600">
+                  <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3">
+                    <span>Design review with legal</span>
+                    <span className="text-xs text-slate-400">Today</span>
+                  </div>
+                  <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3">
+                    <span>Kickoff call scheduled</span>
+                    <span className="text-xs text-slate-400">Tomorrow</span>
+                  </div>
+                  <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3">
+                    <span>Contract approvals</span>
+                    <span className="text-xs text-slate-400">This week</span>
+                  </div>
+                </div>
+                <button className="mt-5 client-btn-ghost" type="button">Open team board</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="client-payments">
+            <ClientSectionHeading
+              subtitle="Payments & milestones"
+              title="Escrow and milestone tracking"
+              copy="Every milestone is funded, approved, and released with audit-ready visibility."
+            />
+            <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="client-card">
+                <p className="text-sm font-semibold text-slate-900">Escrow status</p>
+                <div className="mt-4 space-y-3 text-sm text-slate-600">
+                  <div className="flex items-center justify-between">
+                    <span>Escrow funded</span>
+                    <span className="font-semibold text-slate-900">₹8.6L</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span>Next release</span>
+                    <span className="font-semibold text-slate-900">₹2.8L</span>
+                  </div>
+                  <div className="client-progress">
+                    <div className="client-progress-bar" style={{ width: "72%" }} />
+                  </div>
+                  <p className="text-xs text-slate-400">72% of total budget secured</p>
+                </div>
+                <button className="mt-6 client-btn-primary" type="button">Release milestone</button>
+              </div>
+              <div className="client-card">
+                <p className="text-sm font-semibold text-slate-900">Milestones</p>
+                <div className="mt-4 grid gap-3">
+                  {milestones.map((milestone) => (
+                    <div key={milestone.title} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3">
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800">{milestone.title}</p>
+                        <p className="text-xs text-slate-500">Due {milestone.due}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-semibold text-slate-900">{milestone.amount}</p>
+                        <p className="text-xs text-slate-500">{milestone.status}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="client-analytics">
+            <ClientSectionHeading
+              subtitle="Analytics overview"
+              title="Hiring insights & spend performance"
+              copy="Executive-ready analytics to measure velocity, quality, and budget utilization."
+            />
+            <div className="grid gap-4 lg:grid-cols-3">
+              <div className="client-card">
+                <p className="text-sm font-semibold text-slate-900">Proposal velocity</p>
+                <div className="mt-4">
+                  <LineSpark points={[12, 24, 18, 36, 28, 44, 52]} color="#2563EB" className="h-24 w-full" />
+                </div>
+                <p className="mt-4 text-xs text-slate-500">+21% proposals reviewed this month</p>
+              </div>
+              <div className="client-card">
+                <p className="text-sm font-semibold text-slate-900">Time-to-hire trend</p>
+                <div className="mt-4">
+                  <LineSpark points={[40, 38, 36, 33, 31, 29, 27]} color="#06B6D4" className="h-24 w-full" />
+                </div>
+                <p className="mt-4 text-xs text-slate-500">Median time-to-hire down to 4.2 days</p>
+              </div>
+              <div className="client-card">
+                <p className="text-sm font-semibold text-slate-900">Budget utilization</p>
+                <div className="mt-4">
+                  <RadialMeter value={72} label="Utilization" />
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  );
+}
+
+function FreelancerApp({ onNavigate }) {
+  const dashboardStats = [
+    { label: "Earnings this month", value: "₹3.4L", detail: "+18% vs last month" },
+    { label: "Active proposals", value: "7", detail: "2 awaiting feedback" },
+    { label: "Profile strength", value: "92%", detail: "Top 10% in your niche" },
+    { label: "New job matches", value: "14", detail: "AI-ranked for you" }
+  ];
+
+  const jobMatches = [
+    { title: "Product redesign for fintech app", budget: "₹2.5L", tags: ["UI/UX", "Figma", "Design system"], match: "94%" },
+    { title: "Framer marketing site build", budget: "₹1.1L", tags: ["Framer", "Webflow", "Motion"], match: "91%" },
+    { title: "Creator marketplace dashboard", budget: "₹3.2L", tags: ["React", "Analytics", "SaaS"], match: "89%" }
+  ];
+
+  const proposals = [
+    { name: "Sprint 0 discovery", status: "Draft", client: "Nova Labs" },
+    { name: "Design system refresh", status: "Sent", client: "Arden Finance" },
+    { name: "Growth landing page", status: "Negotiation", client: "Orbit Cloud" }
+  ];
+
+  const portfolioHighlights = [
+    { title: "Fintech onboarding", role: "Product designer" },
+    { title: "Creator studio", role: "Brand + UX" },
+    { title: "SaaS analytics", role: "Design systems" },
+    { title: "Healthtech mobile", role: "UX research" }
+  ];
+
+  const achievements = [
+    { title: "Top 5% Response Rate", detail: "Replies within 3 hours" },
+    { title: "Verified delivery", detail: "26 projects completed" },
+    { title: "Client love", detail: "4.9 average rating" }
+  ];
+
+  const skillGrowth = [
+    { label: "Product strategy", value: 78 },
+    { label: "Motion design", value: 66 },
+    { label: "AI workflows", value: 72 },
+    { label: "Client comms", value: 88 }
+  ];
+
+  return (
+    <div className="freelancer-shell">
+      <header className="freelancer-topbar">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 text-white">GP</span>
+            <div>
+              <p className="text-sm font-semibold text-white">GigPulse Studio</p>
+              <p className="text-xs text-slate-400">Freelancer workspace</p>
+            </div>
+          </div>
+          <div className="hidden items-center gap-3 md:flex">
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+              <input
+                className="h-10 w-64 rounded-full border border-white/10 bg-white/5 pl-9 pr-4 text-sm text-slate-200 outline-none transition focus:border-indigo-400"
+                placeholder="Search jobs, clients, skills"
+              />
+            </div>
+            <button className="freelancer-btn-ghost" type="button">Share portfolio</button>
+            <button className="freelancer-btn-primary" type="button">New proposal</button>
+            <button className="icon-button" type="button" aria-label="Notifications">
+              <Bell className="h-4 w-4" />
+              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-purple-400" />
+            </button>
+            <button className="freelancer-btn-ghost" type="button" onClick={() => onNavigate("/")}>Marketing site</button>
+          </div>
+        </div>
+      </header>
+
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-16 pt-8 lg:flex-row">
+        <aside className="freelancer-sidebar w-full lg:sticky lg:top-24 lg:h-[calc(100vh-7rem)] lg:w-64">
+          <div className="mb-6">
+            <p className="text-xs uppercase tracking-[0.28em] text-slate-400">Creator hub</p>
+            <p className="mt-2 text-lg font-semibold text-white">Sivon Fernandes</p>
+            <p className="text-xs text-slate-400">Product designer · Verified</p>
+          </div>
+          <nav className="grid gap-2">
+            {freelancerNavItems.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-200 transition hover:bg-white/10"
+              >
+                <Icon className="h-4 w-4" />
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
+            <div className="flex items-center gap-3">
+              <div className="grid h-9 w-9 place-items-center rounded-xl bg-purple-500/20 text-purple-200">
+                <Bot className="h-4 w-4" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">AI Proposal Studio</p>
+                <p className="text-xs text-slate-400">3 drafts ready to polish</p>
+              </div>
+            </div>
+            <button className="mt-4 w-full rounded-full border border-white/10 bg-white/10 px-3 py-2 text-xs font-semibold text-white">
+              Launch assistant
+            </button>
+          </div>
+          <div className="mt-6 text-xs text-slate-400">Reputation · Achievements · Settings</div>
+        </aside>
+
+        <main className="flex-1 space-y-12">
+          <section id="freelancer-dashboard" className="freelancer-card">
+            <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div>
+                <span className="freelancer-pill">Creative dashboard</span>
+                <h1 className="freelancer-heading mt-4 text-3xl font-semibold text-white sm:text-4xl">
+                  Build your next milestone with confidence and creative momentum.
+                </h1>
+                <p className="mt-3 text-sm leading-6 text-slate-300">
+                  Your workspace blends portfolio highlights, AI proposal support, and performance insights to keep you ahead.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <button className="freelancer-btn-primary" type="button">
+                    Discover new roles
+                    <ArrowUpRight className="h-4 w-4" />
+                  </button>
+                  <button className="freelancer-btn-ghost" type="button">Refresh profile</button>
+                </div>
+              </div>
+              <div className="grid gap-4">
+                {dashboardStats.slice(0, 2).map((stat) => (
+                  <div key={stat.label} className="freelancer-card-soft">
+                    <p className="text-sm text-slate-300">{stat.label}</p>
+                    <p className="mt-2 text-2xl font-semibold text-white">{stat.value}</p>
+                    <p className="mt-2 text-xs text-slate-400">{stat.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {dashboardStats.map((stat) => (
+                <div key={stat.label} className="freelancer-card">
+                  <p className="text-sm text-slate-300">{stat.label}</p>
+                  <p className="mt-3 text-2xl font-semibold text-white">{stat.value}</p>
+                  <p className="mt-2 text-xs text-slate-400">{stat.detail}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section id="freelancer-portfolio">
+            <FreelancerSectionHeading
+              subtitle="Portfolio profile"
+              title="Portfolio-first profile"
+              copy="Showcase signature work, creative process, and verified impact in one immersive profile."
+            />
+            <div className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
+              <div className="freelancer-card">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-white">Signature profile</p>
+                    <p className="mt-2 text-sm text-slate-400">Creative director · Product design</p>
+                  </div>
+                  <span className="freelancer-badge"><BadgeCheck className="h-3 w-3" /> Verified</span>
+                </div>
+                <div className="mt-4 space-y-3">
+                  {achievements.map((item) => (
+                    <div key={item.title} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <Star className="h-4 w-4 text-amber-400" />
+                      <div>
+                        <p className="text-sm font-semibold text-white">{item.title}</p>
+                        <p className="text-xs text-slate-400">{item.detail}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {["Fintech", "Creator tools", "SaaS", "Brand systems"].map((tag) => (
+                    <span key={tag} className="freelancer-tag">{tag}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="freelancer-card">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-white">Portfolio gallery</p>
+                  <button className="freelancer-btn-ghost" type="button">Customize</button>
+                </div>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {portfolioHighlights.map((item) => (
+                    <div key={item.title} className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-transparent p-4">
+                      <p className="text-sm font-semibold text-white">{item.title}</p>
+                      <p className="mt-2 text-xs text-slate-400">{item.role}</p>
+                      <div className="mt-4 h-20 rounded-xl bg-gradient-to-br from-indigo-500/30 via-purple-500/20 to-cyan-500/20" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="freelancer-jobs">
+            <FreelancerSectionHeading
+              subtitle="Job discovery"
+              title="AI-ranked job matches"
+              copy="Opportunities curated around your niche, portfolio strengths, and availability."
+            />
+            <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="freelancer-card">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-white">Recommended jobs</p>
+                  <button className="freelancer-btn-ghost" type="button">Filter</button>
+                </div>
+                <div className="mt-4 space-y-3">
+                  {jobMatches.map((job) => (
+                    <div key={job.title} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-semibold text-white">{job.title}</p>
+                        <span className="freelancer-pill">{job.match} match</span>
+                      </div>
+                      <p className="mt-2 text-xs text-slate-400">Budget: {job.budget}</p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {job.tags.map((tag) => (
+                          <span key={tag} className="freelancer-tag">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Creative productivity</p>
+                <div className="mt-4 space-y-4">
+                  {[
+                    { label: "Daily focus", value: "5.2 hrs", note: "+12%" },
+                    { label: "Response time", value: "2.8 hrs", note: "Top 8%" },
+                    { label: "Client satisfaction", value: "4.9", note: "Consistent" }
+                  ].map((item) => (
+                    <div key={item.label} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div>
+                        <p className="text-sm font-semibold text-white">{item.label}</p>
+                        <p className="text-xs text-slate-400">{item.note}</p>
+                      </div>
+                      <p className="text-lg font-semibold text-white">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+                <button className="mt-5 freelancer-btn-primary" type="button">Set weekly goals</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="freelancer-proposals">
+            <FreelancerSectionHeading
+              subtitle="Proposal submission"
+              title="AI-assisted proposal flow"
+              copy="Draft sharper proposals, track status, and ship confidently."
+            />
+            <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Proposal tracker</p>
+                <div className="mt-4 space-y-3">
+                  {proposals.map((proposal) => (
+                    <div key={proposal.name} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div>
+                        <p className="text-sm font-semibold text-white">{proposal.name}</p>
+                        <p className="text-xs text-slate-400">{proposal.client}</p>
+                      </div>
+                      <span className="freelancer-pill">{proposal.status}</span>
+                    </div>
+                  ))}
+                </div>
+                <button className="mt-5 freelancer-btn-ghost" type="button">View pipeline</button>
+              </div>
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">AI proposal assistant</p>
+                <div className="mt-4 space-y-3 text-sm text-slate-300">
+                  {[
+                    "Suggested intro referencing the client’s KPIs",
+                    "Highlight portfolio piece: Fintech onboarding",
+                    "Draft timeline and milestone breakdown"
+                  ].map((line) => (
+                    <div key={line} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <Sparkles className="h-4 w-4 text-cyan-300" />
+                      {line}
+                    </div>
+                  ))}
+                </div>
+                <button className="mt-5 freelancer-btn-primary" type="button">Generate proposal</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="freelancer-earnings">
+            <FreelancerSectionHeading
+              subtitle="Earnings & analytics"
+              title="Earnings momentum"
+              copy="Track revenue, utilization, and repeat-client performance."
+            />
+            <div className="grid gap-4 lg:grid-cols-3">
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Revenue trend</p>
+                <div className="mt-4">
+                  <LineSpark points={[10, 18, 16, 24, 22, 30, 34]} color="#8B5CF6" className="h-24 w-full" />
+                </div>
+                <p className="mt-4 text-xs text-slate-400">+22% growth in the last 30 days</p>
+              </div>
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Utilization</p>
+                <div className="mt-4">
+                  <RadialMeter value={76} label="Utilization" />
+                </div>
+              </div>
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Upcoming payouts</p>
+                <div className="mt-4 space-y-3 text-sm text-slate-300">
+                  {[
+                    { title: "Fintech onboarding", value: "₹1.4L", date: "May 25" },
+                    { title: "Creator studio", value: "₹1.1L", date: "Jun 2" }
+                  ].map((item) => (
+                    <div key={item.title} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <div>
+                        <p className="text-sm font-semibold text-white">{item.title}</p>
+                        <p className="text-xs text-slate-400">{item.date}</p>
+                      </div>
+                      <span className="text-sm font-semibold text-white">{item.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="freelancer-messages">
+            <FreelancerSectionHeading
+              subtitle="Client messaging"
+              title="Stay close to client feedback"
+              copy="Threaded messaging paired with quick actions and deadlines."
+            />
+            <div className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+              <div className="freelancer-card">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-white">Active thread</p>
+                  <span className="freelancer-pill">Orbit Cloud</span>
+                </div>
+                <div className="mt-4 space-y-3 text-sm text-slate-300">
+                  <div className="rounded-2xl bg-white/5 px-4 py-3">We love the direction. Can you explore a darker hero?</div>
+                  <div className="rounded-2xl bg-indigo-500/20 px-4 py-3 text-white">Absolutely. I’ll share two variants by tomorrow.</div>
+                </div>
+                <div className="mt-4 flex items-center gap-2">
+                  <input className="h-11 flex-1 rounded-xl border border-white/10 bg-white/5 px-4 text-sm text-slate-200" placeholder="Write a reply" />
+                  <button className="freelancer-btn-primary" type="button">
+                    <Send className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Upcoming touchpoints</p>
+                <div className="mt-4 space-y-3 text-sm text-slate-300">
+                  {[
+                    { title: "Client review call", time: "Tomorrow · 4:00 PM" },
+                    { title: "Proposal follow-up", time: "Friday · 11:30 AM" },
+                    { title: "Portfolio feedback", time: "Next week" }
+                  ].map((item) => (
+                    <div key={item.title} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <span>{item.title}</span>
+                      <span className="text-xs text-slate-400">{item.time}</span>
+                    </div>
+                  ))}
+                </div>
+                <button className="mt-5 freelancer-btn-ghost" type="button">Open calendar</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="freelancer-skills">
+            <FreelancerSectionHeading
+              subtitle="Skill growth"
+              title="Skills & achievements"
+              copy="Track momentum across your core skills and unlock achievement badges."
+            />
+            <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Skill analytics</p>
+                <div className="mt-4 space-y-4">
+                  {skillGrowth.map((skill) => (
+                    <div key={skill.label}>
+                      <div className="flex items-center justify-between text-xs text-slate-400">
+                        <span>{skill.label}</span>
+                        <span>{skill.value}%</span>
+                      </div>
+                      <div className="freelancer-progress mt-2">
+                        <div className="freelancer-progress-bar" style={{ width: `${skill.value}%` }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="freelancer-card">
+                <p className="text-sm font-semibold text-white">Achievement badges</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {[
+                    "Top rated", "Fast responder", "Creative strategist", "AI collaborator"
+                  ].map((badge) => (
+                    <div key={badge} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
+                      <BadgeCheck className="h-4 w-4 text-cyan-300" />
+                      {badge}
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
+                  Unlock premium badges by completing 3 consecutive projects with 5-star feedback.
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  );
+}
+
 function NewProposalButton() {
   const { user } = useAuth();
   function handleClick() {
@@ -816,7 +1750,7 @@ function NewProposalButton() {
 
 export default function App() {
   const [isLight, setIsLight] = useState(false);
-  const [authRoute, setAuthRoute] = useState(() => getAuthRoute(window.location.pathname));
+  const [appRoute, setAppRoute] = useState(() => getAppRoute(window.location.pathname));
 
   useEffect(() => {
     document.documentElement.style.scrollBehavior = "smooth";
@@ -825,7 +1759,7 @@ export default function App() {
       openAuth(type);
     }
     function handlePopState() {
-      setAuthRoute(getAuthRoute(window.location.pathname));
+      setAppRoute(getAppRoute(window.location.pathname));
     }
     window.addEventListener("openAuth", handleOpenAuth);
     window.addEventListener("popstate", handlePopState);
@@ -845,7 +1779,7 @@ export default function App() {
 
   function navigate(path) {
     window.history.pushState({}, "", path);
-    setAuthRoute(getAuthRoute(path));
+    setAppRoute(getAppRoute(path));
   }
 
   function openAuth(type = "login") {
@@ -855,8 +1789,12 @@ export default function App() {
   return (
     <AuthProvider>
       <div className={appClass}>
-        {authRoute ? (
-          <AuthModal open onClose={() => navigate("/")} type={authRoute} variant="page" />
+        {appRoute.type === "auth" ? (
+          <AuthModal open onClose={() => navigate("/")} type={appRoute.mode} variant="page" />
+        ) : appRoute.type === "client" ? (
+          <ClientApp onNavigate={navigate} />
+        ) : appRoute.type === "freelancer" ? (
+          <FreelancerApp onNavigate={navigate} />
         ) : (
           <>
             <Navbar
@@ -884,10 +1822,11 @@ export default function App() {
   );
 }
 
-function getAuthRoute(pathname) {
-  if (!pathname) return null;
-  const path = pathname.toLowerCase();
-  if (path.startsWith("/login")) return "login";
-  if (path.startsWith("/signup") || path.startsWith("/register")) return "register";
-  return null;
+function getAppRoute(pathname) {
+  const path = (pathname || "/").toLowerCase();
+  if (path.startsWith("/login")) return { type: "auth", mode: "login" };
+  if (path.startsWith("/signup") || path.startsWith("/register")) return { type: "auth", mode: "register" };
+  if (path.startsWith("/client")) return { type: "client" };
+  if (path.startsWith("/freelancer")) return { type: "freelancer" };
+  return { type: "landing" };
 }

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700,800&f[]=clash-display@600,700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -102,6 +103,110 @@
 
   .skeleton-line {
     @apply h-3 rounded-full bg-white/10 animate-skeleton;
+  }
+
+  .client-shell {
+    @apply min-h-screen bg-slate-50 text-slate-900;
+  }
+
+  .client-topbar {
+    @apply sticky top-0 z-40 border-b border-slate-200 bg-white/85 backdrop-blur-xl;
+  }
+
+  .client-sidebar {
+    @apply rounded-3xl border border-slate-200 bg-slate-950 text-white shadow-[0_24px_48px_rgba(15,23,42,0.22)];
+  }
+
+  .client-card {
+    @apply rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.08)];
+  }
+
+  .client-card-muted {
+    @apply rounded-2xl border border-slate-200 bg-slate-50/80 p-6;
+  }
+
+  .client-pill {
+    @apply rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600;
+  }
+
+  .client-badge {
+    @apply inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700;
+  }
+
+  .client-btn-primary {
+    @apply inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800;
+  }
+
+  .client-btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900;
+  }
+
+  .client-progress {
+    @apply h-2 w-full rounded-full bg-slate-100;
+  }
+
+  .client-progress-bar {
+    @apply h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400;
+  }
+
+  .freelancer-shell {
+    @apply min-h-screen text-slate-100;
+    background:
+      radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.2), transparent 35%),
+      radial-gradient(circle at 70% 10%, rgba(168, 85, 247, 0.22), transparent 35%),
+      radial-gradient(circle at 90% 70%, rgba(14, 165, 233, 0.18), transparent 40%),
+      #0b0b12;
+    font-family: "General Sans", "Inter", system-ui, sans-serif;
+  }
+
+  .freelancer-heading {
+    font-family: "Clash Display", "Space Grotesk", system-ui, sans-serif;
+  }
+
+  .freelancer-topbar {
+    @apply sticky top-0 z-40 border-b border-white/5 bg-[#0b0b12]/75 backdrop-blur-xl;
+  }
+
+  .freelancer-sidebar {
+    @apply rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-[0_30px_70px_rgba(15,23,42,0.6)];
+    backdrop-filter: blur(20px);
+  }
+
+  .freelancer-card {
+    @apply rounded-2xl border border-white/10 bg-white/[0.06] p-6 shadow-[0_24px_60px_rgba(15,23,42,0.45)];
+    backdrop-filter: blur(18px);
+  }
+
+  .freelancer-card-soft {
+    @apply rounded-2xl border border-white/10 bg-white/[0.04] p-6;
+  }
+
+  .freelancer-pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-slate-200;
+  }
+
+  .freelancer-badge {
+    @apply inline-flex items-center gap-1 rounded-full bg-indigo-500/15 px-2.5 py-1 text-xs font-semibold text-indigo-200;
+  }
+
+  .freelancer-btn-primary {
+    @apply inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(99,102,241,0.4)] transition hover:-translate-y-0.5;
+  }
+
+  .freelancer-btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-indigo-300/40 hover:text-white;
+  }
+
+  .freelancer-tag {
+    @apply rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300;
+  }
+
+  .freelancer-progress {
+    @apply h-2 w-full rounded-full bg-white/10;
+  }
+
+  .freelancer-progress-bar {
+    @apply h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-500;
   }
 }
 
