@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponseNotFound
 from django.contrib import admin
 from django.urls import include, path, re_path
-from django.views.generic import TemplateView
 from apps.core.views import spa_index
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
@@ -38,11 +38,20 @@ urlpatterns = [
     path("api/v1/", include("apps.payments.urls")),
 ]
 
-# Serve React SPA at root (index) and catch-all for client-side routing
+SPA_SKIP_PREFIXES = ("api/", "admin/", "static/", "media/")
+
+
+def spa_or_404(request, *args, **kwargs):
+    path = request.path.lstrip("/")
+    if path and path.startswith(SPA_SKIP_PREFIXES):
+        return HttpResponseNotFound()
+    return spa_index(request)
+
+
+# Serve React SPA at root and catch-all for client-side routing.
 urlpatterns += [
-    # Serve built SPA index (served from static/dist) for root and any client-side route
-    path("", spa_index, name="home"),
-    re_path(r"^(?:.*)/?$", spa_index, name="spa-catchall"),
+    path("", spa_or_404, name="home"),
+    re_path(r"^(?:.*)/?$", spa_or_404, name="spa-catchall"),
 ]
 
 if settings.DEBUG:

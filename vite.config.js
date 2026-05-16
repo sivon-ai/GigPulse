@@ -1,9 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: "/static/dist/",
+  base: command === "build" ? "/static/dist/" : "/",
   build: {
     outDir: "gigpulse/static/dist",
     emptyOutDir: true,
@@ -20,4 +20,4 @@ export default defineConfig({
       }
     }
   }
-});
+}));
