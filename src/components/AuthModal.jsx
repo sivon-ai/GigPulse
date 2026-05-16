@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useAuth } from "../hooks/useAuth";
 import { ArrowRight, Mail, ShieldCheck, UserRound } from "lucide-react";
+import gigpulseLogo from "../assets/gigpulse-logo.svg";
 
 function flattenErrors(err) {
   const details = err?.detail || err?.non_field_errors || err;
@@ -59,8 +60,8 @@ export default function AuthModal({ open, onClose, type = "login", variant = "mo
         <div className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
             <a href="/" className="flex items-center gap-3 text-white">
-              <span className="grid h-9 w-9 place-items-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-cyan-400 shadow-glow">
-                GP
+              <span className="grid h-9 w-9 place-items-center rounded-2xl bg-white/10">
+                <img src={gigpulseLogo} alt="GigPulse" className="h-7 w-7" />
               </span>
               <span className="font-display text-lg font-bold">GigPulse</span>
             </a>

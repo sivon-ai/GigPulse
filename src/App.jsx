@@ -50,6 +50,7 @@ import {
   useTransform
 } from "framer-motion";
 import heroVisual from "./assets/gigpulse-hero.png";
+import gigpulseLogo from "./assets/gigpulse-logo.svg";
 import { AuthProvider, useAuth } from "./hooks/useAuth";
 import AuthModal from "./components/AuthModal";
 
@@ -248,7 +249,7 @@ function RadialMeter({ value, label }) {
   );
 }
 
-function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
+function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick, onNavigate }) {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
@@ -257,8 +258,8 @@ function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/55 backdrop-blur-2xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
         <a href="#home" className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-blue-500 via-violet-500 to-cyan-400 shadow-glow">
-            <Zap className="h-5 w-5 text-white" />
+          <span className="grid h-10 w-10 place-items-center rounded-2xl bg-white/10 shadow-glow">
+            <img src={gigpulseLogo} alt="GigPulse" className="h-8 w-8" />
           </span>
           <span className="font-display text-xl font-bold text-white">GigPulse</span>
         </a>
@@ -299,6 +300,22 @@ function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
           </button>
           {user ? (
             <>
+              {user.role === "client" && (
+                <button
+                  onClick={() => onNavigate?.("/client")}
+                  className="btn-ghost"
+                >
+                  Client Workspace
+                </button>
+              )}
+              {user.role === "freelancer" && (
+                <button
+                  onClick={() => onNavigate?.("/freelancer")}
+                  className="btn-ghost"
+                >
+                  Freelancer Workspace
+                </button>
+              )}
               {user.role === "client" ? (
                 <a href="#post" className="btn-primary">Post project</a>
               ) : (
@@ -308,6 +325,18 @@ function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
             </>
           ) : (
             <>
+              <button
+                onClick={() => onNavigate?.("/client")}
+                className="btn-ghost"
+              >
+                Client Workspace
+              </button>
+              <button
+                onClick={() => onNavigate?.("/freelancer")}
+                className="btn-ghost"
+              >
+                Freelancer Workspace
+              </button>
               <button onClick={onLoginClick} className="btn-ghost">Login</button>
               <button onClick={onSignUpClick} className="btn-primary">Sign Up</button>
             </>
@@ -358,6 +387,30 @@ function Navbar({ isLight, onToggleTheme, onLoginClick, onSignUpClick }) {
                 {label}
               </a>
             ))}
+            {onNavigate && (
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  onNavigate("/freelancer");
+                }}
+                className="rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-200 transition hover:bg-white/10"
+                type="button"
+              >
+                Freelancer Workspace
+              </button>
+            )}
+            {onNavigate && (
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  onNavigate("/client");
+                }}
+                className="rounded-xl px-3 py-3 text-left text-sm font-medium text-slate-200 transition hover:bg-white/10"
+                type="button"
+              >
+                Client Workspace
+              </button>
+            )}
           </div>
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button className="btn-ghost" type="button" onClick={onToggleTheme}>
@@ -883,7 +936,9 @@ function ClientApp({ onNavigate }) {
       <header className="client-topbar">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-slate-900 text-white">GP</span>
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-slate-900/90">
+              <img src={gigpulseLogo} alt="GigPulse" className="h-8 w-8" />
+            </span>
             <div>
               <p className="text-sm font-semibold text-slate-900">GigPulse Client</p>
               <p className="text-xs text-slate-500">Hiring workspace</p>
@@ -1350,7 +1405,9 @@ function FreelancerApp({ onNavigate }) {
       <header className="freelancer-topbar">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 text-white">GP</span>
+            <span className="grid h-10 w-10 place-items-center rounded-2xl bg-white/10">
+              <img src={gigpulseLogo} alt="GigPulse" className="h-8 w-8" />
+            </span>
             <div>
               <p className="text-sm font-semibold text-white">GigPulse Studio</p>
               <p className="text-xs text-slate-400">Freelancer workspace</p>
@@ -1748,7 +1805,76 @@ function NewProposalButton() {
   );
 }
 
-export default function App() {
+function FreelancerGate({ onNavigate, loading }) {
+  return (
+    <div className="freelancer-shell flex min-h-screen items-center justify-center px-6">
+      <div className="freelancer-card max-w-xl text-center">
+        <span className="freelancer-pill">Freelancer workspace</span>
+        <h2 className="freelancer-heading mt-4 text-2xl font-semibold text-white">
+          {loading ? "Loading your workspace" : "Sign in as a freelancer"}
+        </h2>
+        <p className="mt-3 text-sm text-slate-300">
+          {loading
+            ? "Syncing your profile and portfolio data."
+            : "This area is reserved for freelancer accounts so your portfolio and earnings stay protected."}
+        </p>
+        {!loading && (
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <button className="freelancer-btn-primary" type="button" onClick={() => onNavigate("/login")}
+            >
+              Login
+            </button>
+            <button className="freelancer-btn-ghost" type="button" onClick={() => onNavigate("/signup")}
+            >
+              Create freelancer account
+            </button>
+            <button className="freelancer-btn-ghost" type="button" onClick={() => onNavigate("/")}
+            >
+              Back to home
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ClientGate({ onNavigate, loading }) {
+  return (
+    <div className="client-shell flex min-h-screen items-center justify-center px-6">
+      <div className="client-card max-w-xl text-center">
+        <span className="client-pill">Client workspace</span>
+        <h2 className="mt-4 text-2xl font-semibold text-slate-900">
+          {loading ? "Loading your client workspace" : "Sign in as a client"}
+        </h2>
+        <p className="mt-3 text-sm text-slate-500">
+          {loading
+            ? "Syncing your hiring dashboard and proposal pipeline."
+            : "This area is reserved for client accounts to keep proposals, contracts, and billing secure."}
+        </p>
+        {!loading && (
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <button className="client-btn-primary" type="button" onClick={() => onNavigate("/login")}
+            >
+              Login
+            </button>
+            <button className="client-btn-ghost" type="button" onClick={() => onNavigate("/signup")}
+            >
+              Create client account
+            </button>
+            <button className="client-btn-ghost" type="button" onClick={() => onNavigate("/")}
+            >
+              Back to home
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function AppShell() {
+  const { user, loading } = useAuth();
   const [isLight, setIsLight] = useState(false);
   const [appRoute, setAppRoute] = useState(() => getAppRoute(window.location.pathname));
 
@@ -1786,38 +1912,53 @@ export default function App() {
     navigate(type === "register" ? "/signup" : "/login");
   }
 
+  if (appRoute.type === "auth") {
+    return <AuthModal open onClose={() => navigate("/")} type={appRoute.mode} variant="page" />;
+  }
+
+  if (appRoute.type === "client") {
+    if (loading || user?.role !== "client") {
+      return <ClientGate onNavigate={navigate} loading={loading} />;
+    }
+    return <ClientApp onNavigate={navigate} />;
+  }
+
+  if (appRoute.type === "freelancer") {
+    if (loading || user?.role !== "freelancer") {
+      return <FreelancerGate onNavigate={navigate} loading={loading} />;
+    }
+    return <FreelancerApp onNavigate={navigate} />;
+  }
+
+  return (
+    <div className={appClass}>
+      <Navbar
+        isLight={isLight}
+        onToggleTheme={() => setIsLight((current) => !current)}
+        onLoginClick={() => openAuth("login")}
+        onSignUpClick={() => openAuth("register")}
+        onNavigate={navigate}
+      />
+      <main>
+        <Hero />
+        <TrendingSkills />
+        <Projects />
+        <FreelancerProfiles />
+        <AIRecommendation />
+        <ChatPreview />
+        <Dashboard />
+        <Pricing />
+        <Testimonials />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export default function App() {
   return (
     <AuthProvider>
-      <div className={appClass}>
-        {appRoute.type === "auth" ? (
-          <AuthModal open onClose={() => navigate("/")} type={appRoute.mode} variant="page" />
-        ) : appRoute.type === "client" ? (
-          <ClientApp onNavigate={navigate} />
-        ) : appRoute.type === "freelancer" ? (
-          <FreelancerApp onNavigate={navigate} />
-        ) : (
-          <>
-            <Navbar
-              isLight={isLight}
-              onToggleTheme={() => setIsLight((current) => !current)}
-              onLoginClick={() => openAuth("login")}
-              onSignUpClick={() => openAuth("register")}
-            />
-            <main>
-              <Hero />
-              <TrendingSkills />
-              <Projects />
-              <FreelancerProfiles />
-              <AIRecommendation />
-              <ChatPreview />
-              <Dashboard />
-              <Pricing />
-              <Testimonials />
-            </main>
-            <Footer />
-          </>
-        )}
-      </div>
+      <AppShell />
     </AuthProvider>
   );
 }
