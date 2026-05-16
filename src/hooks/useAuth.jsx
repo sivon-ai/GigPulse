@@ -3,6 +3,49 @@ import { getStoredTokens, storeTokens, clearTokens, API_BASE } from "../api";
 
 const AuthContext = createContext(null);
 
+const API_UNAVAILABLE_MESSAGE =
+  "Cannot reach the API server. Make sure the Django backend is running on http://localhost:8000 and try again.";
+
+async function readErrorResponse(res) {
+  const contentType = res.headers.get("content-type") || "";
+
+  if (contentType.includes("application/json")) {
+    const data = await res.json().catch(() => null);
+    if (data) return data;
+  }
+
+  const text = await res.text().catch(() => "");
+  if (text.includes("ECONNREFUSED") || text.includes("http proxy error")) {
+    return { detail: API_UNAVAILABLE_MESSAGE };
+  }
+  if (contentType.includes("text/html")) {
+    return { detail: `Request failed with status ${res.status}. Check the Django server logs for details.` };
+  }
+
+  const message = text.trim();
+  return { detail: message ? message.slice(0, 300) : `Request failed with status ${res.status}.` };
+}
+
+async function postAuth(path, payload) {
+  let res;
+  try {
+    res = await fetch(`${API_BASE}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(payload),
+    });
+  } catch (err) {
+    throw { detail: API_UNAVAILABLE_MESSAGE };
+  }
+
+  if (!res.ok) {
+    throw await readErrorResponse(res);
+  }
+
+  return res.json();
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,17 +59,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   async function login({ email, password }) {
-    const res = await fetch(`${API_BASE}/auth/login/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ email, password }),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw err;
-    }
-    const data = await res.json();
+    const data = await postAuth("/auth/login/", { email, password });
     const userData = data.user || null;
     const accessToken = data?.tokens?.access || data.access || null;
     if (accessToken || userData) {
@@ -37,17 +70,7 @@ export function AuthProvider({ children }) {
   }
 
   async function register(payload) {
-    const res = await fetch(`${API_BASE}/auth/register/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(payload),
-    });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw err;
-    }
-    const data = await res.json();
+    const data = await postAuth("/auth/register/", payload);
     const userData = data.user || null;
     const accessToken = data?.tokens?.access || data.access || null;
     if (accessToken || userData) {
